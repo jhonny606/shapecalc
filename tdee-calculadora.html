@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de TDEE - ShapeCalc</title>
+    <meta name="description" content="Calcule seu TDEE (gasto calórico diário) e descubra quantas calorias você precisa para manter, perder ou ganhar peso. Ferramenta simples para cutting e bulking.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- SEO: Hero + Introdução -->
+        <h1>Calculadora de TDEE (Gasto Calórico Diário)</h1>
+        <p>
+            Descubra quantas calorias seu corpo gasta por dia e utilize isso para montar dietas eficazes para perda de gordura (cutting), ganho de massa (bulking) ou manutenção.
+        </p>
+
+        <!-- SEO: O que é TDEE -->
+        <h2>O que é TDEE?</h2>
+        <p>
+            TDEE significa <strong>Total Daily Energy Expenditure</strong> e representa o total de calorias que seu corpo queima diariamente, incluindo metabolismo basal, atividades do dia a dia e exercícios físicos. Saber seu TDEE é essencial para planejar qualquer dieta.
+        </p>
+
+        <!-- SEO: Por que calcular -->
+        <h2>Por que calcular o TDEE?</h2>
+        <p>
+            Se você não souber seu TDEE, qualquer tentativa de perder ou ganhar peso pode falhar. Ele é a base para:
+            <ul>
+                <li>Definir déficit calórico para emagrecer</li>
+                <li>Definir superávit calórico para ganhar massa</li>
+                <li>Manter seu peso atual com segurança</li>
+            </ul>
+        </p>
+
+        <!-- Calculadora funcional (seu HTML original) -->
+        <h2>Calculadora de TDEE</h2>
+        <label>Peso (kg):</label>
+        <input type="number" id="peso">
+
+        <label>Altura (cm):</label>
+        <input type="number" id="altura">
+
+        <label>Idade:</label>
+        <input type="number" id="idade">
+
+        <label>Sexo:</label>
+        <select id="sexo">
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+        </select>
+
+        <label>Nível de atividade:</label>
+        <select id="atividade">
+            <option value="1.2">Sedentário</option>
+            <option value="1.375">Levemente ativo</option>
+            <option value="1.55">Moderadamente ativo</option>
+            <option value="1.725">Muito ativo</option>
+            <option value="1.9">Extremamente ativo</option>
+        </select>
+
+        <button onclick="calcularTDEE()">Calcular TDEE</button>
+
+        <h2 id="resultado"></h2>
+
+        <!-- FAQ (SEO extra) -->
+        <h2>Perguntas Frequentes</h2>
+
+        <h3>O que é TDEE?</h3>
+        <p>É a quantidade total de calorias que você queima diariamente considerando metabolismo e atividade física.</p>
+
+        <h3>Como posso usar meu TDEE para emagrecer?</h3>
+        <p>Você deve consumir menos calorias que seu TDEE (déficit calórico) para perder gordura.</p>
+
+        <h3>Como posso usar meu TDEE para ganhar massa?</h3>
+        <p>Você deve consumir mais calorias que seu TDEE (superávit calórico) para ganhar massa muscular.</p>
+
+        <h3>O TDEE muda com o tempo?</h3>
+        <p>Sim! Seu TDEE pode mudar conforme você ganha ou perde peso, ou altera seu nível de atividade física.</p>
+
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
