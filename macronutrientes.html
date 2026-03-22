@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Macronutrientes – ShapeCalc</title>
-    <meta name="description" content="Calcule a quantidade ideal de proteínas, carboidratos e gorduras para seu objetivo: manutenção, Cutting ou Bulking.">
+    <meta name="description" content="Calcule a quantidade ideal de proteínas, carboidratos e gorduras para manutenção, Cutting ou Bulking com intensidade selecionável.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,16 +22,27 @@
 
         <p>Baseado no seu TDEE calculado, descubra a divisão ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
 
-        <label for="objetivo-macro">Objetivo:</label>
-        <select id="objetivo-macro">
+        <label for="objetivo">Objetivo:</label>
+        <select id="objetivo">
             <option value="manutencao">Manutenção</option>
             <option value="cutting">Cutting</option>
             <option value="bulking">Bulking</option>
         </select>
 
+        <div id="intensidade-container" style="display:none;">
+            <label for="intensidade">Intensidade:</label>
+            <select id="intensidade">
+                <option value="leve">Leve (250 kcal)</option>
+                <option value="moderado">Moderado (500 kcal)</option>
+                <option value="agressivo">Agressivo (750 kcal)</option>
+            </select>
+        </div>
+
+        <p>Seu TDEE atual: <span id="tdee-macro"></span> kcal</p>
+
         <button onclick="calcularMacros()">Calcular Macronutrientes</button>
 
-        <h2 id="resultado-macro"></h2>
+        <h2 id="resultado"></h2>
 
         <h2>Dicas gerais</h2>
         <ul>
