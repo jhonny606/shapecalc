@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorias para Cutting – ShapeCalc</title>
+    <meta name="description" content="Descubra quantas calorias consumir em déficit para perder gordura mantendo músculos de forma saudável.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+    </nav>
+
+    <div class="container">
+        <h1>Calorias para Cutting</h1>
+
+<!-- Introdução SEO -->
+        <p>
+        Cutting é o processo de redução de gordura corporal mantendo o máximo de massa muscular possível. Para isso, é necessário criar um déficit calórico baseado no seu TDEE.
+        </p>
+
+<!-- Seu TDEE atual -->
+        <p>Seu TDEE atual:</p>
+        <h2 id="tdee"></h2>
+
+<!-- Seleção do déficit -->
+        <label>Déficit calórico:</label>
+        <select id="deficit">
+            <option value="300">Leve (-300 kcal)</option>
+            <option value="500">Moderado (-500 kcal)</option>
+            <option value="700">Agressivo (-700 kcal)</option>
+        </select>
+
+        <button onclick="calcularCutting()">Calcular Cutting</button>
+
+<!-- Resultado -->
+        <h2 id="resultado"></h2>
+
+<!-- Conteúdo explicativo adicional -->
+       <h2>Como usar seu déficit calórico</h2>
+       <p>
+       Escolha o déficit que se encaixa no seu objetivo e estilo de vida. Déficits leves são mais fáceis de manter, enquanto déficits agressivos podem gerar perda de massa muscular se feitos de forma inadequada.
+       </p>
+
+       <h2>Dicas para Cutting saudável</h2>
+       <ul>
+           <li>Mantenha ingestão suficiente de proteínas</li>
+           <li>Inclua vegetais e fibras para saciedade</li>
+           <li>Não reduza calorias de forma drástica sem acompanhamento</li>
+           <li>Continue treinando força para preservar músculos</li>
+       </ul>
+    </div>
+
+    <script src="js/main.js"></script>
+
+</body>
+</html>
