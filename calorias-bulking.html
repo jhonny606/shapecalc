@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorias para Bulking – ShapeCalc</title>
+    <meta name="description" content="Descubra quantas calorias consumir em superávit para ganhar massa muscular mantendo a gordura sob controle.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+    </nav>
+
+    <div class="container">
+        <h1>Calorias para Bulking</h1>
+
+<!-- Introdução SEO -->
+        <p>
+        Bulking é o processo de ganho de massa muscular aumentando o consumo de calorias acima do seu TDEE. O objetivo é ganhar músculo mantendo o acúmulo de gordura sob controle.
+        </p>
+
+<!-- Seu TDEE atual -->
+        <p>Seu TDEE atual:</p>
+        <h2 id="tdee"></h2>
+
+<!-- Seleção do superávit -->
+        <label>Superávit calórico:</label>
+        <select id="superavit">
+            <option value="300">Leve (+300 kcal)</option>
+            <option value="500">Moderado (+500 kcal)</option>
+            <option value="700">Agressivo (+700 kcal)</option>
+        </select>
+
+        <button onclick="calcularBulking()">Calcular Bulking</button>
+
+<!-- Resultado -->
+        <h2 id="resultado"></h2>
+
+<!-- Conteúdo explicativo adicional -->
+        <h2>Como usar seu superávit calórico</h2>
+        <p>
+        Escolha o superávit que se encaixa no seu objetivo e rotina de treino. Superávits leves aumentam massa mais lentamente mas com menos gordura, enquanto superávits maiores aceleram o ganho muscular, mas podem gerar mais gordura.
+        </p>
+
+        <h2>Dicas para Bulking saudável</h2>
+        <ul>
+            <li>Priorize proteínas e carboidratos de qualidade</li>
+            <li>Inclua exercícios de força consistentes</li>
+            <li>Evite excesso de alimentos ultraprocessados</li>
+            <li>Monitore seu ganho de peso semanalmente</li>
+        </ul>
+    </div>
+
+    <script src="js/main.js"></script>
+
+</body>
+</html>
