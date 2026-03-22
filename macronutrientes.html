@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Macronutrientes – ShapeCalc</title>
+    <meta name="description" content="Calcule a quantidade ideal de proteínas, carboidratos e gorduras para seu objetivo: manutenção, Cutting ou Bulking.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+    </nav>
+
+    <div class="container">
+        <h1>Calculadora de Macronutrientes</h1>
+
+        <p>Baseado no seu TDEE calculado, descubra a divisão ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
+
+        <label for="objetivo-macro">Objetivo:</label>
+        <select id="objetivo-macro">
+            <option value="manutencao">Manutenção</option>
+            <option value="cutting">Cutting</option>
+            <option value="bulking">Bulking</option>
+        </select>
+
+        <button onclick="calcularMacros()">Calcular Macronutrientes</button>
+
+        <h2 id="resultado-macro"></h2>
+
+        <h2>Dicas gerais</h2>
+        <ul>
+            <li>Mantenha ingestão adequada de proteínas para preservar massa muscular</li>
+            <li>Ajuste carboidratos conforme seu nível de atividade física</li>
+            <li>Inclua gorduras saudáveis para funções hormonais e saciedade</li>
+            <li>Monitore resultados e ajuste macros semanalmente</li>
+        </ul>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
