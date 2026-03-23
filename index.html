@@ -3,35 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShapeCalc</title>
-    <meta name="description" content="ShapeCalc: ferramentas para calcular TDEE, macros, Cutting e Bulking e alcançar seus objetivos de forma prática.">
+    <title>ShapeCalc - Evolua seu Shape com Precisão</title>
+    <meta name="description" content="ShapeCalc: ferramentas profissionais para calcular TDEE, macros, Cutting e Bulking de forma prática.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header>
-        <h1>ShapeCalc</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="tdee-calculadora.html">TDEE</a>
-            <a href="macronutrientes.html">Macronutrientes</a>
-            <a href="calorias-cutting.html">Cutting</a>
-            <a href="calorias-bulking.html">Bulking</a>
-        </nav>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Shape<span>Calc</span></a>
+            <div class="nav-links">
+                <a href="tdee-calculadora.html">TDEE</a>
+                <a href="macronutrientes.html">Macros</a>
+                <a href="calorias-cutting.html">Cutting</a>
+                <a href="calorias-bulking.html">Bulking</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Transforme sua composição corporal com <span>ciência</span>.</h1>
+            <p>Ferramentas precisas para quem leva o treino e a dieta a sério. Calcule seu gasto energético e planeje seus macros em segundos.</p>
+        </div>
     </header>
 
-    <main>
-        <h2>Calculadoras Fitness</h2>
-        <p>Escolha uma das ferramentas abaixo:</p>
+    <main class="container">
+        <div class="home-grid">
+            <a href="tdee-calculadora.html" class="card">
+                <div class="card-icon">🔥</div>
+                <h3>Calculadora de TDEE</h3>
+                <p>Descubra seu gasto calórico diário total considerando seu nível de atividade.</p>
+                <span class="btn-text">Calcular Agora →</span>
+            </a>
 
-        <div class="home-buttons">
-            <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
-            <a href="macronutrientes.html" class="btn-link">Macronutrientes</a>
-            <a href="calorias-cutting.html" class="btn-link">Calorias para Cutting</a>
-            <a href="calorias-bulking.html" class="btn-link">Calorias para Bulking</a>
+            <a href="macronutrientes.html" class="card">
+                <div class="card-icon">🥩</div>
+                <h3>Macronutrientes</h3>
+                <p>Distribuição ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
+                <span class="btn-text">Ver Divisão →</span>
+            </a>
+
+            <a href="calorias-cutting.html" class="card">
+                <div class="card-icon">🔪</div>
+                <h3>Calculadora de Cutting</h3>
+                <p>Defina o déficit ideal para perder gordura preservando o máximo de massa muscular.</p>
+                <span class="btn-text">Iniciar Secagem →</span>
+            </a>
+
+            <a href="calorias-bulking.html" class="card">
+                <div class="card-icon">💪</div>
+                <h3>Calculadora de Bulking</h3>
+                <p>Ajuste seu superávit calórico para ganhar peso e massa de forma controlada.</p>
+                <span class="btn-text">Ganhar Massa →</span>
+            </a>
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <footer>
+        <p>&copy; 2026 ShapeCalc. Precisão em cada caloria.</p>
+    </footer>
+
 </body>
 </html>
