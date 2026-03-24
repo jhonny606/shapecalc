@@ -9,13 +9,19 @@
 </head>
 <body>
 
-    <nav>
-        <a href="index.html">Home</a>
+    <header>
+    <h1>ShapeCalc</h1>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <nav id="menu">
+        <a href="index.html">Início</a>
         <a href="tdee-calculadora.html">TDEE</a>
         <a href="macronutrientes.html">Macronutrientes</a>
         <a href="calorias-cutting.html">Cutting</a>
         <a href="calorias-bulking.html">Bulking</a>
     </nav>
+</header>
 
     <div class="container">
 
@@ -68,7 +74,7 @@
             <option value="1.9">Extremamente ativo</option>
         </select>
 
-        <button onclick="calcularTDEE()">Calcular TDEE</button>
+        <button onclick="calcularTDEE()">Calcular agora 🚀</button>
 
         <h2 id="resultado"></h2>
 
@@ -88,6 +94,10 @@
         <p>Sim!! Seu TDEE pode mudar conforme você ganha ou perde peso, ou altera seu nível de atividade física.</p>
 
     </div>
+
+    <script>
+    document.getElementById("peso").focus();
+    </script>
 
     <script src="js/main.js"></script>
 </body>
