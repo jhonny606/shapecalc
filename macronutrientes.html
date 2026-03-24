@@ -9,13 +9,19 @@
 </head>
 <body>
 
-    <nav>
-        <a href="index.html">Home</a>
+    <header>
+    <h1>ShapeCalc</h1>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <nav id="menu">
+        <a href="index.html">Início</a>
         <a href="tdee-calculadora.html">TDEE</a>
         <a href="macronutrientes.html">Macronutrientes</a>
         <a href="calorias-cutting.html">Cutting</a>
         <a href="calorias-bulking.html">Bulking</a>
     </nav>
+</header>
 
     <div class="container">
         <h1>Calculadora de Macronutrientes</h1>
@@ -23,7 +29,7 @@
         <p>Baseado no seu TDEE calculado, descubra a divisão ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
 
         <label for="objetivo">Objetivo:</label>
-        <select id="objetivo">
+        <select id="objetivo" onchange="toggleIntensidade()">
             <option value="manutencao">Manutenção</option>
             <option value="cutting">Cutting</option>
             <option value="bulking">Bulking</option>
@@ -51,8 +57,14 @@
             <li>Inclua gorduras saudáveis para funções hormonais e saciedade</li>
             <li>Monitore resultados e ajuste macros semanalmente</li>
         </ul>
+
+        <div style="max-width: 350px; margin: 30px auto;">
+            <canvas id="graficoMacros"></canvas>
+        </div>
+
     </div>
 
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
