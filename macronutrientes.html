@@ -14,13 +14,13 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-84XJNCCE9P');
     </script>
 </head>
 <body>
+    <canvas id="particles"></canvas>
 
-    <header>
+<header>
     <h1>ShapeCalc</h1>
 
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -34,49 +34,68 @@
     </nav>
 </header>
 
-    <div class="container">
+<div class="container">
+
+    <!-- CARD CALCULADORA -->
+    <div class="card form-card">
+
         <h1>Calculadora de Macronutrientes</h1>
 
         <p>Baseado no seu TDEE calculado, descubra a divisão ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
 
-        <label for="objetivo">Objetivo:</label>
-        <select id="objetivo" onchange="toggleIntensidade()">
-            <option value="manutencao">Manutenção</option>
-            <option value="cutting">Cutting</option>
-            <option value="bulking">Bulking</option>
-        </select>
+        <div class="form-grid">
 
-        <div id="intensidade-container" style="display:none;">
-            <label for="intensidade">Intensidade:</label>
-            <select id="intensidade">
-                <option value="leve">Leve (250 kcal)</option>
-                <option value="moderado">Moderado (500 kcal)</option>
-                <option value="agressivo">Agressivo (750 kcal)</option>
-            </select>
+            <div class="input-group">
+                <label for="objetivo">Objetivo:</label>
+                <select id="objetivo" onchange="toggleIntensidade()">
+                    <option value="manutencao">Manutenção</option>
+                    <option value="cutting">Cutting</option>
+                    <option value="bulking">Bulking</option>
+                </select>
+            </div>
+
+            <div id="intensidade-container" class="input-group">
+                <label for="intensidade">Intensidade:</label>
+                <select id="intensidade">
+                    <option value="leve">Leve (250 kcal)</option>
+                    <option value="moderado">Moderado (500 kcal)</option>
+                    <option value="agressivo">Agressivo (750 kcal)</option>
+                </select>
+            </div>
+
         </div>
 
-        <p>Seu TDEE atual: <span id="tdee-macro"></span> kcal</p>
+        <div id="tdee">
+            TDEE atual: <span id="tdee-macro"></span> kcal
+        </div>
 
         <button onclick="calcularMacros()">Calcular Macronutrientes</button>
 
-        <h2 id="resultado"></h2>
+        <div id="resultado">Seu resultado aparecerá aqui</div>
 
-        <h2>Dicas gerais</h2>
+    </div>
+
+    <!-- CARD DICAS -->
+    <div class="card">
+        <h3>Dicas gerais</h3>
         <ul>
             <li>Mantenha ingestão adequada de proteínas para preservar massa muscular</li>
             <li>Ajuste carboidratos conforme seu nível de atividade física</li>
             <li>Inclua gorduras saudáveis para funções hormonais e saciedade</li>
             <li>Monitore resultados e ajuste macros semanalmente</li>
         </ul>
-
-        <div style="max-width: 350px; margin: 30px auto;">
-            <canvas id="graficoMacros"></canvas>
-        </div>
-
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- CARD GRÁFICO -->
+    <div class="card">
+        <p>Divisão dos macronutrientes:</p>
+        <canvas id="graficoMacros" style="max-width: 400px; margin: 30px auto;"></canvas>
+    </div>
+
+</div>
+
+<script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <footer class="footer">
     <div class="footer-container">

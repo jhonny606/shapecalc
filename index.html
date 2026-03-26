@@ -6,7 +6,11 @@
     <title>ShapeCalc</title>
     <meta name="description" content="ShapeCalc: ferramentas para calcular TDEE, macros, Cutting e Bulking e alcançar seus objetivos de forma prática.">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="icon" type="image/png" href="img/favicon.png">
 
     <!-- Google tag (gtag.js) -->
@@ -15,13 +19,14 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-84XJNCCE9P');
     </script>
 </head>
-<body>
 
-    <header>
+<body>
+<canvas id="particles"></canvas>
+
+<header>
     <h1>ShapeCalc</h1>
 
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -35,47 +40,55 @@
     </nav>
 </header>
 
-    <main class="container">
+<main class="container">
 
     <!-- HERO -->
-    <section class="hero">
-        <h2>Descubra seu gasto calórico e macros em segundos</h2>
+    <section class="hero card">
+        <h2>SUA MELHOR FORMA, <span>CÁLCULO PRECISO</span></h2>
+        
         <p>
-            Calcule TDEE, macronutrientes e calorias ideais para Cutting ou Bulking
-    com precisão e rapidez.
+            Calcule TDEE, macronutrientes e calorias ideais para Cutting ou Bulking com precisão e rapidez.
         </p>
+
+        <!-- CTA -->
+        <div class="hero-actions">
+            <a href="tdee-calculadora.html" class="btn-primary">Começar pelo TDEE</a>
+            <a href="macronutrientes.html" class="btn-secondary">Ver Macronutrientes</a>
+        </div>
     </section>
 
     <!-- FERRAMENTAS -->
     <section class="tools">
-        <h3>Ferramentas</h3>
+        <h1>Ferramentas</h1>
 
         <div class="tools-grid">
-            <a href="tdee-calculadora.html" class="card">
+
+            <a href="tdee-calculadora.html" class="card tool-card">
                 <h4>TDEE</h4>
                 <p>Calcule seu gasto calórico diário</p>
             </a>
 
-            <a href="macronutrientes.html" class="card">
+            <a href="macronutrientes.html" class="card tool-card">
                 <h4>Macronutrientes</h4>
-                <p>Distribuição ideal de proteínas, carbs e gordura</p>
+                <p>Distribuição ideal de proteínas, carboidratos e gorduras</p>
             </a>
 
-            <a href="calorias-cutting.html" class="card">
+            <a href="calorias-cutting.html" class="card tool-card">
                 <h4>Cutting</h4>
-                <p>Calorias para perda de gordura</p>
+                <p>Calorias ideais para perda de gordura</p>
             </a>
 
-            <a href="calorias-bulking.html" class="card">
+            <a href="calorias-bulking.html" class="card tool-card">
                 <h4>Bulking</h4>
-                <p>Calorias para ganho de massa</p>
+                <p>Calorias ideais para ganho de massa</p>
             </a>
+
         </div>
     </section>
 
 </main>
 
-    <script src="js/main.js"></script>
+<script src="js/main.js"></script>
 
 <footer class="footer">
     <div class="footer-container">

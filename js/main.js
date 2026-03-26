@@ -65,13 +65,13 @@ function calcularTDEE() {
         <hr style="margin:15px 0;">
 
         🔻 Cutting: ${Math.round(cutting)} kcal 
-        <a href="macronutrientes.html" onclick="setObjetivo('cutting')">(usar)</a><br>
+        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('cutting')">(usar)</a><br>
 
         ⚖️ Manutenção: ${Math.round(tdee)} kcal 
-        <a href="macronutrientes.html" onclick="setObjetivo('manutencao')">(usar)</a><br>
+        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('manutencao')">(usar)</a><br>
 
         🔺 Bulking: ${Math.round(bulking)} kcal 
-        <a href="macronutrientes.html" onclick="setObjetivo('bulking')">(usar)</a>
+        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('bulking')">(usar)</a>
     `;
 }
 
@@ -90,8 +90,12 @@ function calcularCutting() {
     let deficit = parseFloat(document.getElementById("deficit").value);
 
     if (!tdee) {
-        document.getElementById("resultado").innerText =
-            "Calcule seu TDEE primeiro!";
+        document.getElementById("resultado").innerHTML = `
+            <div class="alerta">
+                <p>Calcule seu TDEE primeiro!</p>
+                <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
+            </div>
+            `;
         return;
     }
 
@@ -109,8 +113,12 @@ function calcularBulking() {
     let superavit = parseFloat(document.getElementById("superavit").value);
 
     if (!tdee) {
-        document.getElementById("resultado").innerText =
-            "Calcule seu TDEE primeiro!";
+        document.getElementById("resultado").innerHTML = `
+            <div class="alerta">
+                <p>Calcule seu TDEE primeiro!</p>
+                <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
+            </div>
+            `;
         return;
     }
 
@@ -128,8 +136,12 @@ function calcularMacros() {
     let peso = parseFloat(localStorage.getItem("peso"));
 
     if (!tdee || !peso) {
-        document.getElementById("resultado").innerText =
-            "Calcule seu TDEE primeiro!";
+        document.getElementById("resultado").innerHTML = `
+        <div class="alerta">
+            <p>Calcule seu TDEE primeiro!</p>
+            <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
+        </div>
+        `;
         return;
     }
 
@@ -282,3 +294,78 @@ document.addEventListener("DOMContentLoaded", function () {
         atualizarIntensidade();
     }
 });
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particlesArray;
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Ajustar no resize
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+
+class Particle {
+    constructor(x, y, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // rebater nas bordas
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+    }
+
+    draw() {
+        const colors = [
+  "rgba(163,255,51,0.25)",
+  "rgba(34,211,238,0.2)"
+];
+
+ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init() {
+    particlesArray = [];
+    let numberOfParticles = window.innerWidth < 768 ? 30 : 60;
+
+    for (let i = 0; i < numberOfParticles; i++) {
+        let size = Math.random() * 2 + 1;
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        let speedX = (Math.random() - 0.5) * 0.3;
+        let speedY = (Math.random() - 0.5) * 0.3;
+
+        particlesArray.push(new Particle(x, y, size, speedX, speedY));
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();

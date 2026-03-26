@@ -14,15 +14,15 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-84XJNCCE9P');
     </script>
 </head>
+
 <body>
+    <canvas id="particles"></canvas>
 
-    <header>
+<header>
     <h1>ShapeCalc</h1>
-
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
     <nav id="menu">
@@ -34,47 +34,57 @@
     </nav>
 </header>
 
-    <div class="container">
+<div class="container">
+    <div class="card form-card">
+
         <h1>Calorias para Cutting</h1>
 
-<!-- Introdução SEO -->
+        <!-- Introdução -->
         <p>
         Cutting é o processo de redução de gordura corporal mantendo o máximo de massa muscular possível. Para isso, é necessário criar um déficit calórico baseado no seu TDEE.
         </p>
 
-<!-- Seu TDEE atual -->
+        <!-- TDEE -->
         <p>Seu TDEE atual:</p>
         <h2 id="tdee"></h2>
 
-<!-- Seleção do déficit -->
-        <label>Déficit calórico:</label>
-        <select id="deficit">
-            <option value="300">Leve (-300 kcal)</option>
-            <option value="500">Moderado (-500 kcal)</option>
-            <option value="700">Agressivo (-700 kcal)</option>
-        </select>
+        <!-- Déficit -->
+        <div class="input-group">
+            <label for="deficit">Déficit calórico</label>
+            <select id="deficit">
+                <option value="300">Leve (-300 kcal)</option>
+                <option value="500">Moderado (-500 kcal)</option>
+                <option value="700">Agressivo (-700 kcal)</option>
+            </select>
+        </div>
 
         <button onclick="calcularCutting()">Calcular Cutting</button>
 
-<!-- Resultado -->
-        <h2 id="resultado"></h2>
+        <!-- Resultado -->
+        <div id="resultado">Seu resultado aparecerá aqui</div>
 
-<!-- Conteúdo explicativo adicional -->
-       <h2>Como usar seu déficit calórico</h2>
-       <p>
-       Escolha o déficit que se encaixa no seu objetivo e estilo de vida. Déficits leves são mais fáceis de manter, enquanto déficits agressivos podem gerar perda de massa muscular se feitos de forma inadequada.
-       </p>
-
-       <h2>Dicas para Cutting saudável</h2>
-       <ul>
-           <li>Mantenha ingestão suficiente de proteínas</li>
-           <li>Inclua vegetais e fibras para saciedade</li>
-           <li>Não reduza calorias de forma drástica sem acompanhamento</li>
-           <li>Continue treinando força para preservar músculos</li>
-       </ul>
+        <!-- Conteúdo extra -->
     </div>
 
-    <script src="js/main.js"></script>
+    <div class="card">
+            <h2>Como usar seu déficit calórico</h2>
+            <p>
+            Escolha o déficit que se encaixa no seu objetivo e estilo de vida. Déficits leves são mais fáceis de manter, enquanto déficits agressivos podem gerar perda de massa muscular se feitos de forma inadequada.
+            </p>
+        </div>
+
+    <div class="card">
+            <h2>Dicas para Cutting saudável</h2>
+            <ul>
+                <li>Mantenha ingestão suficiente de proteínas</li>
+                <li>Inclua vegetais e fibras para saciedade</li>
+                <li>Não reduza calorias de forma drástica sem acompanhamento</li>
+                <li>Continue treinando força para preservar músculos</li>
+            </ul>
+        </div>
+</div>
+
+<script src="js/main.js"></script>
 
 <footer class="footer">
     <div class="footer-container">

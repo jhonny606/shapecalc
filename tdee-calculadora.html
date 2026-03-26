@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Calculadora de TDEE - ShapeCalc</title>
-    <meta name="description" content="Calcule seu TDEE (gasto calórico diário) e descubra quantas calorias você precisa para manter, perder ou ganhar peso. Ferramenta simples para cutting e bulking.">
+
+    <meta name="description" content="Calcule seu TDEE (gasto calórico diário) e descubra quantas calorias você precisa para manter, perder ou ganhar peso.">
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="img/favicon.png">
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-84XJNCCE9P"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-84XJNCCE9P');
     </script>
 </head>
+
 <body>
 
-    <header>
+<canvas id="particles"></canvas>
+
+<header>
     <h1>ShapeCalc</h1>
 
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -34,61 +39,67 @@
     </nav>
 </header>
 
-    <div class="container">
+<div class="container">
 
-        <!-- SEO: Hero + Introdução -->
-        <h1>Calculadora de TDEE (Gasto Calórico Diário)</h1>
-        <p>
-            Descubra quantas calorias seu corpo gasta por dia e utilize isso para montar dietas eficazes para perda de gordura (cutting), ganho de massa (bulking) ou manutenção.
-        </p>
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Calculadora de TDEE</h1>
+        <p>Descubra seu gasto calórico diário e monte sua estratégia de cutting ou bulking.</p>
+    </div>
 
-        <!-- SEO: O que é TDEE -->
-        <h2>O que é TDEE?</h2>
-        <p>
-            TDEE significa <strong>Total Daily Energy Expenditure</strong> e representa o total de calorias que seu corpo queima diariamente, incluindo metabolismo basal, atividades do dia a dia e exercícios físicos. Saber seu TDEE é essencial para planejar qualquer dieta.
-        </p>
+    <!-- EXPLICAÇÃO SEO -->
+    <h2>O que é TDEE?</h2>
+    <p>TDEE (Total Daily Energy Expenditure) é o total de calorias que seu corpo gasta por dia.</p>
 
-        <!-- SEO: Por que calcular -->
-        <h2>Por que calcular o TDEE?</h2>
-        <p>
-            Se você não souber seu TDEE, qualquer tentativa de perder ou ganhar peso pode falhar. Ele é a base para:
-            <ul>
-                <li>Definir déficit calórico para emagrecer</li>
-                <li>Definir superávit calórico para ganhar massa</li>
-                <li>Manter seu peso atual com segurança</li>
-            </ul>
-        </p>
+    <!-- CARD CALCULADORA -->
+    <div class="card form-card">
 
-        <!-- Calculadora funcional (seu HTML original) -->
-        <h2>Calculadora de TDEE</h2>
-        <label>Peso (kg):</label>
-        <input type="number" id="peso">
+        <h2>Calcular TDEE</h2>
 
-        <label>Altura (cm):</label>
-        <input type="number" id="altura">
+        <div class="form-grid">
 
-        <label>Idade:</label>
-        <input type="number" id="idade">
+            <div class="input-group">
+                <label>Peso (kg)</label>
+                <input type="number" id="peso" placeholder="80">
+            </div>
 
-        <label>Sexo:</label>
-        <select id="sexo">
-            <option value="masculino">Masculino</option>
-            <option value="feminino">Feminino</option>
-        </select>
+            <div class="input-group">
+                <label>Altura (cm)</label>
+                <input type="number" id="altura" placeholder="180">
+            </div>
 
-        <label>Nível de atividade:</label>
-        <select id="atividade">
-            <option value="1.2">Sedentário</option>
-            <option value="1.375">Levemente ativo</option>
-            <option value="1.55">Moderadamente ativo</option>
-            <option value="1.725">Muito ativo</option>
-            <option value="1.9">Extremamente ativo</option>
-        </select>
+            <div class="input-group">
+                <label>Idade</label>
+                <input type="number" id="idade" placeholder="25">
+            </div>
+
+            <div class="input-group">
+                <label>Sexo</label>
+                <select id="sexo">
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                </select>
+            </div>
+
+            <div class="input-group full">
+                <label>Nível de atividade</label>
+                <select id="atividade">
+                    <option value="1.2">Sedentário</option>
+                    <option value="1.375">Levemente ativo</option>
+                    <option value="1.55">Moderadamente ativo</option>
+                    <option value="1.725">Muito ativo</option>
+                    <option value="1.9">Extremamente ativo</option>
+                </select>
+            </div>
+
+        </div>
 
         <button onclick="calcularTDEE()">Calcular agora 🚀</button>
 
-        <h2 id="resultado"></h2>
+        <div id="resultado">Seu resultado aparecerá aqui</div>
 
+    </div>
+    <div class="card">
         <!-- FAQ (SEO extra) -->
         <h2>Perguntas Frequentes</h2>
 
@@ -103,14 +114,9 @@
 
         <h3>O TDEE muda com o tempo?</h3>
         <p>Sim!! Seu TDEE pode mudar conforme você ganha ou perde peso, ou altera seu nível de atividade física.</p>
-
     </div>
 
-    <script>
-    document.getElementById("peso").focus();
-    </script>
-
-    <script src="js/main.js"></script>
+</div>
 
 <footer class="footer">
     <div class="footer-container">
@@ -141,6 +147,12 @@
         © 2026 ShapeCalc. Todos os direitos reservados.
     </div>
 </footer>
+
+<script>
+document.getElementById("peso").focus();
+</script>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>

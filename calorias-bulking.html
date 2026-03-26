@@ -14,15 +14,15 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-84XJNCCE9P');
     </script>
 </head>
+
 <body>
+    <canvas id="particles"></canvas>
 
-    <header>
+<header>
     <h1>ShapeCalc</h1>
-
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
     <nav id="menu">
@@ -34,47 +34,58 @@
     </nav>
 </header>
 
-    <div class="container">
+<div class="container">
+    <div class="card form-card">
+
         <h1>Calorias para Bulking</h1>
 
-<!-- Introdução SEO -->
+        <!-- Introdução -->
         <p>
         Bulking é o processo de ganho de massa muscular aumentando o consumo de calorias acima do seu TDEE. O objetivo é ganhar músculo mantendo o acúmulo de gordura sob controle.
         </p>
 
-<!-- TDEE atual -->
+        <!-- TDEE -->
         <p>Seu TDEE atual:</p>
         <h2 id="tdee"></h2>
 
-<!-- Seleção do superávit -->
-        <label>Superávit calórico:</label>
-        <select id="superavit">
-            <option value="300">Leve (+300 kcal)</option>
-            <option value="500">Moderado (+500 kcal)</option>
-            <option value="700">Agressivo (+700 kcal)</option>
-        </select>
+        <!-- Superávit -->
+        <div class="input-group">
+            <label for="superavit">Superávit calórico</label>
+            <select id="superavit">
+                <option value="300">Leve (+300 kcal)</option>
+                <option value="500">Moderado (+500 kcal)</option>
+                <option value="700">Agressivo (+700 kcal)</option>
+            </select>
+        </div>
 
         <button onclick="calcularBulking()">Calcular Bulking</button>
 
-<!-- Resultado -->
-        <h2 id="resultado"></h2>
+        <!-- Resultado -->
+        <div id="resultado">Seu resultado aparecerá aqui</div>
 
-<!-- Conteúdo explicativo adicional -->
+        <!-- Conteúdo extra -->
+
+    </div>
+
+    <div class="card">
         <h2>Como usar seu superávit calórico</h2>
         <p>
         Escolha o superávit que se encaixa no seu objetivo e rotina de treino. Superávits leves aumentam massa mais lentamente mas com menos gordura, enquanto superávits maiores aceleram o ganho muscular, mas podem gerar mais gordura.
         </p>
-
-        <h2>Dicas para Bulking saudável</h2>
-        <ul>
-            <li>Priorize proteínas e carboidratos de qualidade</li>
-            <li>Inclua exercícios de força consistentes</li>
-            <li>Evite excesso de alimentos ultraprocessados</li>
-            <li>Monitore seu ganho de peso semanalmente</li>
-        </ul>
     </div>
 
-    <script src="js/main.js"></script>
+    <div class="card">
+            <h2>Dicas para Bulking saudável</h2>
+            <ul>
+                <li>Priorize proteínas e carboidratos de qualidade</li>
+                <li>Inclua exercícios de força consistentes</li>
+                <li>Evite excesso de alimentos ultraprocessados</li>
+                <li>Monitore seu ganho de peso semanalmente</li>
+            </ul>
+        </div>
+</div>
+
+<script src="js/main.js"></script>
 
 <footer class="footer">
     <div class="footer-container">
