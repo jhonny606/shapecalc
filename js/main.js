@@ -3,7 +3,12 @@
 // ==============================
 function toggleMenu() {
     const menu = document.getElementById("menu");
-    if (menu) menu.classList.toggle("active");
+    const logo = document.getElementById("logo");
+    const button = document.querySelector(".menu-toggle");
+
+    menu.classList.toggle("active");
+    logo.classList.toggle("hidden");
+    button.classList.toggle("active");
 }
 
 // ==============================
