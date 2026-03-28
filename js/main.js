@@ -20,16 +20,26 @@ function calcularTDEE() {
     let idade = parseInt(document.getElementById("idade").value);
     let sexo = document.getElementById("sexo").value;
     let atividade = parseFloat(document.getElementById("atividade").value);
+    let bf = parseFloat(document.getElementById("bf")?.value); // percentual de gordura opcional
 
-    if (!peso || !altura || !idade || !atividade) {
+    if (peso <= 0 || altura <= 0 || idade <= 0 || !atividade) {
         document.getElementById("resultado").innerText =
-            "Preencha todos os campos corretamente!";
+            "Preencha todos os campos obrigatórios corretamente!";
         return;
     }
 
-    let tmb = (sexo === "masculino")
-        ? (10 * peso) + (6.25 * altura) - (5 * idade) + 5
-        : (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+    let tmb;
+
+    if (!isNaN(bf) && bf > 0 && bf < 100) {
+        // Usando Katch-McArdle baseado em massa magra
+        let massaMagro = peso * (1 - bf / 100);
+        tmb = 370 + (21.6 * massaMagro);
+    } else {
+        // Usando Mifflin-St Jeor
+        tmb = (sexo === "masculino")
+            ? (10 * peso) + (6.25 * altura) - (5 * idade) + 5
+            : (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+    }
 
     let tdee = tmb * atividade;
 
@@ -57,12 +67,14 @@ function calcularTDEE() {
     localStorage.setItem("idade", idade);
     localStorage.setItem("sexo", sexo);
     localStorage.setItem("atividade", atividade);
+    if (bf) localStorage.setItem("bf", bf);
 
     let resultado = document.getElementById("resultado");
 
     resultado.innerHTML = `
         🔥 TDEE: <strong>${Math.round(tdee)} kcal</strong><br>
-        TMB: ${Math.round(tmb)} kcal<br><br>
+        TMB: ${Math.round(tmb)} kcal<br>
+        ${bf ? `📊 Percentual de gordura: ${bf}%<br>` : ""}<br>
 
         <strong>${classificacao}</strong><br>
         <span style="color:#9ca3af">${dica}</span>

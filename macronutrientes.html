@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Macronutrientes – ShapeCalc</title>
+    <title>Calculadora de Macronutrientes (Proteína, Carboidrato e Gordura)</title>
     <meta name="description" content="Calcule a quantidade ideal de proteínas, carboidratos e gorduras para manutenção, Cutting ou Bulking com intensidade selecionável.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="img/favicon.png">
@@ -31,6 +31,10 @@
         <a href="macronutrientes.html">Macronutrientes</a>
         <a href="calorias-cutting.html">Cutting</a>
         <a href="calorias-bulking.html">Bulking</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos</a>
+        <a href="contato.html">Contato</a>
     </nav>
 </header>
 
@@ -41,7 +45,7 @@
 
         <h1>Calculadora de Macronutrientes</h1>
 
-        <p>Baseado no seu TDEE calculado, descubra a divisão ideal de proteínas, carboidratos e gorduras para seu objetivo.</p>
+        <p>Descubra a divisão ideal de proteínas, carboidratos e gorduras com base no seu gasto calórico diário (TDEE).</p>
 
         <div class="form-grid">
 
@@ -75,24 +79,71 @@
 
     </div>
 
-    <!-- CARD DICAS -->
-    <div class="card">
-        <h3>Dicas gerais</h3>
-        <ul>
-            <li>Mantenha ingestão adequada de proteínas para preservar massa muscular</li>
-            <li>Ajuste carboidratos conforme seu nível de atividade física</li>
-            <li>Inclua gorduras saudáveis para funções hormonais e saciedade</li>
-            <li>Monitore resultados e ajuste macros semanalmente</li>
-        </ul>
-    </div>
-
     <!-- CARD GRÁFICO -->
     <div class="card">
         <p>Divisão dos macronutrientes:</p>
         <canvas id="graficoMacros" style="max-width: 250px; margin: 30px auto;"></canvas>
     </div>
 
+    <!-- CONTEÚDO SEO -->
+    <div class="card">
+        <h2>O que são macronutrientes?</h2>
+        <p>Macronutrientes são os nutrientes responsáveis por fornecer energia ao corpo: proteínas, carboidratos e gorduras. Cada um desempenha um papel essencial na saúde, no desempenho físico e na composição corporal.</p>
+
+        <h2>Proteínas, carboidratos e gorduras</h2>
+
+        <h3>Proteínas</h3>
+        <p>As proteínas são fundamentais para a construção e manutenção da massa muscular. Também participam de processos hormonais e recuperação muscular. A recomendação comum é entre 1.6g e 2.2g por kg de peso corporal.</p>
+
+        <h3>Carboidratos</h3>
+        <p>Os carboidratos são a principal fonte de energia do corpo. São essenciais para treinos intensos e para manter o desempenho físico. A quantidade ideal varia conforme o nível de atividade.</p>
+
+        <h3>Gorduras</h3>
+        <p>As gorduras são importantes para a produção hormonal, saúde cerebral e absorção de vitaminas. Mesmo em dietas de cutting, elas não devem ser eliminadas.</p>
+
+        <h2>Como calcular seus macronutrientes</h2>
+        <p>O cálculo dos macronutrientes começa pelo seu gasto calórico diário (TDEE). A partir disso, ajusta-se a ingestão calórica de acordo com o objetivo:</p>
+
+        <ul>
+            <li><strong>Manutenção:</strong> calorias iguais ao TDEE</li>
+            <li><strong>Cutting:</strong> déficit calórico</li>
+            <li><strong>Bulking:</strong> superávit calórico</li>
+        </ul>
+
+        <p>Depois, essas calorias são distribuídas entre proteínas, carboidratos e gorduras conforme estratégias nutricionais.</p>
+    </div>
+
+     <!-- FAQ (SEO PESADO) -->
+    <div class="card">
+        <h2>Perguntas frequentes</h2>
+
+        <h3>Quantos gramas de proteína devo consumir por dia?</h3>
+        <p>Geralmente entre 1.6g e 2.2g por kg de peso corporal, dependendo do nível de treino e objetivo.</p>
+
+        <h3>Macros mudam no cutting?</h3>
+        <p>Sim. No cutting, reduz-se calorias e normalmente ajusta-se carboidratos, mantendo proteínas altas para preservar massa muscular.</p>
+
+        <h3>Qual a melhor divisão de macronutrientes?</h3>
+        <p>Não existe uma única divisão ideal. Ela varia conforme objetivo, metabolismo e nível de atividade física.</p>
+
+        <h3>Preciso contar macros todos os dias?</h3>
+        <p>Não é obrigatório, mas pode ajudar muito no controle alimentar e na consistência dos resultados.</p>
+    </div>
+
+    <!-- DICAS -->
+    <div class="card">
+        <h3>Dicas gerais</h3>
+        <ul>
+            <li>Mantenha ingestão adequada de proteínas</li>
+            <li>Ajuste carboidratos conforme atividade física</li>
+            <li>Inclua gorduras saudáveis</li>
+            <li>Revise seus macros semanalmente</li>
+        </ul>
+    </div>
+
 </div>
+
+
 
 <script src="js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -114,9 +165,16 @@
             <a href="calorias-bulking.html">Bulking</a>
         </div>
 
+        <div class="footer-links">
+            <h3>Institucional</h3>
+            <a href="sobre.html">Sobre</a>
+            <a href="privacidade.html">Privacidade</a>
+            <a href="termos.html">Termos</a>
+        </div>
+
         <div class="footer-contact">
             <h3>Contato</h3>
-            <p>📩 Parcerias e dúvidas:</p>
+            <p>📩 Email:</p>
             <a href="mailto:jhonnysilva.jh606@gmail.com">contato</a>
         </div>
 

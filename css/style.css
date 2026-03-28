@@ -41,8 +41,9 @@ h1, h2, h3 {
   margin-top: 15px;
 }
 
-h1 { font-size: 2rem; }
-h2 { font-size: 2.2rem; }
+/* hierarquia corrigida */
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.6rem; }
 h3 { font-size: 1.2rem; color: var(--secondary); }
 
 /* ==============================
@@ -289,6 +290,12 @@ button:hover {
    GRID / CARDS
    ============================== */
 
+.card ul li {
+    margin-top: 10px;
+    margin-bottom: 10px; /* espaço entre os itens da lista */
+    line-height: 1.5;    /* aumenta o espaçamento entre linhas */
+}
+
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -387,6 +394,19 @@ button:hover {
 .footer-container > div {
   flex: 1;
   min-width: 250px; 
+}
+
+.footer-links a {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    transform: translateX(3px);
 }
 
 .footer p {
@@ -569,4 +589,13 @@ button:hover {
 /* resultado com glow leve */
 #resultado {
     box-shadow: 0 0 20px rgba(34,197,94,0.15);
+}
+
+
+/* anúncios adsense */
+.ad {
+    margin: 30px auto;
+    padding: 0 10px;
+    max-width: 100%;
+    text-align: center;
 }
