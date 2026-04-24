@@ -7,10 +7,9 @@
     <meta name="description" content="Aprenda sobre TDEE, calorias, cutting e bulking com guias completos do ShapeCalc.">
 
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="img/favicon.png">
 
@@ -28,12 +27,12 @@
 </head>
 
 <body>
-<canvas id="particles"></canvas>
-
 <header>
-    <h1 id="logo">ShapeCalc</h1>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
 
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 
     <nav id="menu">
         <a href="index.html">Início</a>
@@ -94,40 +93,30 @@
 
 <footer class="footer">
     <div class="footer-container">
-
         <div class="footer-brand">
-            <h2>ShapeCalc</h2>
+            <h2>Shape<span style="color:var(--accent)">Calc</span></h2>
             <p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p>
         </div>
-
         <div class="footer-links">
-            <h3>Navegação</h3>
-            <a href="index.html">Início</a>
+            <h3>Ferramentas</h3>
             <a href="tdee-calculadora.html">TDEE</a>
-            <a href="macronutrientes.html">Macros</a>
+            <a href="macronutrientes.html">Macronutrientes</a>
             <a href="calorias-cutting.html">Cutting</a>
             <a href="calorias-bulking.html">Bulking</a>
-            <a href="blog.html">Blog</a>
         </div>
-
         <div class="footer-links">
-            <h3>Institucional</h3>
+            <h3>Conteúdo</h3>
+            <a href="blog.html">Blog</a>
             <a href="sobre.html">Sobre</a>
+        </div>
+        <div class="footer-links">
+            <h3>Legal</h3>
             <a href="privacidade.html">Privacidade</a>
             <a href="termos.html">Termos</a>
+            <a href="contato.html">Contato</a>
         </div>
-
-        <div class="footer-contact">
-            <h3>Contato</h3>
-            <p>📩 Email:</p>
-            <a href="mailto:jhonnysilva.jh606@gmail.com">contato</a>
-        </div>
-
     </div>
-
-    <div class="footer-bottom">
-        © 2026 ShapeCalc. Todos os direitos reservados.
-    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
 </footer>
 
 </body>

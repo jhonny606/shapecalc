@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de TDEE (Gasto Calórico Diário) | ShapeCalc</title>
-    <!-- Adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042" crossorigin="anonymous"></script>
     <meta name="description" content="Calcule seu TDEE (gasto calórico diário) e descubra quantas calorias você precisa para manter, perder ou ganhar peso.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="canonical" href="https://www.shapecalc.com.br/tdee-calculadora.html">
-
-    <!-- Google Analytics -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-84XJNCCE9P"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -24,12 +21,12 @@
 
 <body>
 
-<canvas id="particles"></canvas>
-
 <header>
-    <h1 id="logo">ShapeCalc</h1>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
 
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 
     <nav id="menu">
         <a href="index.html">Início</a>
@@ -41,52 +38,40 @@
     </nav>
 </header>
 
-<div class="container">
+<main class="container">
 
-    <!-- HERO -->
-    <div class="hero">
-        <h1>Calculadora de TDEE (Gasto Calórico Diário)</h1>
-        <p>
-        Use nossa calculadora de TDEE para descobrir seu gasto calórico diário e saber exatamente quantas calorias você precisa consumir para emagrecer, manter ou ganhar massa muscular.
-        </p>
+    <div class="hero-simple">
+        <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);display:block;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;">Calculadora</span>
+        <h1>TDEE — Gasto Calórico Diário</h1>
+        <p>Descubra quantas calorias seu corpo gasta por dia. Base para qualquer estratégia de dieta.</p>
     </div>
 
-    <!-- EXPLICAÇÃO SEO -->
-     <div class="hero">
-    <h1>O que é TDEE?</h1>
-    <p>
-    TDEE (Total Daily Energy Expenditure) é o total de calorias que seu corpo gasta diariamente, incluindo metabolismo basal, atividades do dia a dia e exercícios físicos.
-    </p>
+    <!-- CALCULADORA -->
+    <div class="card form-card" style="margin-bottom:24px;">
 
-    <p>
-    Saber seu TDEE é essencial para definir estratégias de emagrecimento (cutting), manutenção de peso ou ganho de massa muscular (bulking).
-    </p>
-    </div>
-
-    <!-- CARD CALCULADORA -->
-    <div class="card form-card">
-
-        <h2>Calcular TDEE</h2>
+        <div>
+            <h2 style="margin-bottom:6px;">Calcular TDEE</h2>
+            <p style="font-size:0.85rem;">Preencha os campos abaixo para obter seu gasto calórico total diário.</p>
+        </div>
 
         <div class="form-grid">
-
             <div class="input-group">
-                <label>Peso (kg)</label>
-                <input type="number" id="peso" placeholder="80">
+                <label for="peso">Peso (kg)</label>
+                <input type="number" id="peso" placeholder="80" min="30" max="300">
             </div>
 
             <div class="input-group">
-                <label>Altura (cm)</label>
-                <input type="number" id="altura" placeholder="180">
+                <label for="altura">Altura (cm)</label>
+                <input type="number" id="altura" placeholder="180" min="100" max="250">
             </div>
 
             <div class="input-group">
-                <label>Idade</label>
-                <input type="number" id="idade" placeholder="25">
+                <label for="idade">Idade</label>
+                <input type="number" id="idade" placeholder="25" min="10" max="100">
             </div>
 
             <div class="input-group">
-                <label>Sexo</label>
+                <label for="sexo">Sexo</label>
                 <select id="sexo">
                     <option value="masculino">Masculino</option>
                     <option value="feminino">Feminino</option>
@@ -94,12 +79,12 @@
             </div>
 
             <div class="input-group">
-                <label for="bf">Percentual de gordura corporal (opcional)</label>
+                <label for="bf">% Gordura corporal (opcional)</label>
                 <input type="number" id="bf" placeholder="Ex: 20" min="0" max="60">
             </div>
 
             <div class="input-group">
-                <label>Nível de atividade</label>
+                <label for="atividade">Nível de atividade</label>
                 <select id="atividade">
                     <option value="1.2">Sedentário</option>
                     <option value="1.375">Levemente ativo</option>
@@ -108,80 +93,80 @@
                     <option value="1.9">Extremamente ativo</option>
                 </select>
             </div>
-
         </div>
 
-        <button onclick="calcularTDEE()">Calcular agora 🚀</button>
+        <button onclick="calcularTDEE()">Calcular agora</button>
 
-        <div id="resultado">Seu resultado aparecerá aqui</div>
+        <div id="resultado">Preencha os campos e clique em calcular.</div>
 
     </div>
 
+    <div class="ad"></div>
+
+    <!-- O QUE É TDEE -->
+    <div class="card" style="margin-bottom:24px;">
+        <h3 style="margin-bottom:16px;">O que é TDEE?</h3>
+        <p style="margin-bottom:12px;">TDEE (Total Daily Energy Expenditure) é o total de calorias que seu corpo gasta diariamente, incluindo metabolismo basal, atividades do dia a dia e exercícios físicos.</p>
+        <p>Saber seu TDEE é essencial para definir estratégias de emagrecimento (cutting), manutenção de peso ou ganho de massa muscular (bulking).</p>
+    </div>
+
+    <!-- FAQ -->
     <div class="card">
-        <!-- FAQ (SEO extra) -->
-        <h2>Perguntas Frequentes</h2>
+        <h3 style="margin-bottom:0;">Perguntas Frequentes</h3>
 
-        <h3>O que é TDEE?</h3>
-        <p>É a quantidade total de calorias que você queima diariamente considerando metabolismo e atividade física.</p>
+        <div class="faq-item">
+            <h3>Como posso usar meu TDEE para emagrecer?</h3>
+            <p>Consuma menos calorias que seu TDEE (déficit calórico) para perder gordura. Um déficit de 300–500 kcal/dia costuma ser seguro e sustentável.</p>
+        </div>
 
-        <h3>Como posso usar meu TDEE para emagrecer?</h3>
-        <p>Você deve consumir menos calorias que seu TDEE (déficit calórico) para perder gordura.</p>
+        <div class="faq-item">
+            <h3>Como usar o TDEE para ganhar massa?</h3>
+            <p>Consuma mais calorias que seu TDEE (superávit calórico). Para um bulking limpo, um superávit de 200–400 kcal já é suficiente.</p>
+        </div>
 
-        <h3>Como posso usar meu TDEE para ganhar massa?</h3>
-        <p>Você deve consumir mais calorias que seu TDEE (superávit calórico) para ganhar massa muscular.</p>
+        <div class="faq-item">
+            <h3>O TDEE muda com o tempo?</h3>
+            <p>Sim. Conforme você ganha ou perde peso, ou altera o nível de atividade física, seu TDEE muda. Recalcule a cada 4–6 semanas.</p>
+        </div>
 
-        <h3>O TDEE muda com o tempo?</h3>
-        <p>Sim!! Seu TDEE pode mudar conforme você ganha ou perde peso, ou altera seu nível de atividade física.</p>
-
-        <h3>Preciso informar meu percentual de gordura (BF)?</h3>
-        <p>Não, é opcional. Informar o BF permite um cálculo mais preciso da TMB usando a massa magra (Katch-McArdle). Sem ele, o método padrão (Mifflin-St Jeor) ainda fornece uma boa estimativa.</p>
+        <div class="faq-item">
+            <h3>Preciso informar o percentual de gordura (BF)?</h3>
+            <p>Não, é opcional. Informar o BF permite um cálculo mais preciso usando a massa magra (Katch-McArdle). Sem ele, usamos o método Mifflin-St Jeor, que ainda é uma boa estimativa.</p>
+        </div>
     </div>
 
-</div>
+</main>
+
+<script>document.getElementById("peso").focus();</script>
+<script src="js/main.js"></script>
 
 <footer class="footer">
     <div class="footer-container">
-
         <div class="footer-brand">
-            <h2>ShapeCalc</h2>
+            <h2>Shape<span style="color:var(--accent)">Calc</span></h2>
             <p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p>
         </div>
-
         <div class="footer-links">
-            <h3>Navegação</h3>
-            <a href="index.html">Início</a>
+            <h3>Ferramentas</h3>
             <a href="tdee-calculadora.html">TDEE</a>
-            <a href="macronutrientes.html">Macros</a>
+            <a href="macronutrientes.html">Macronutrientes</a>
             <a href="calorias-cutting.html">Cutting</a>
             <a href="calorias-bulking.html">Bulking</a>
-            <a href="blog.html">Blog</a>
         </div>
-
         <div class="footer-links">
-            <h3>Institucional</h3>
+            <h3>Conteúdo</h3>
+            <a href="blog.html">Blog</a>
             <a href="sobre.html">Sobre</a>
+        </div>
+        <div class="footer-links">
+            <h3>Legal</h3>
             <a href="privacidade.html">Privacidade</a>
             <a href="termos.html">Termos</a>
+            <a href="contato.html">Contato</a>
         </div>
-
-        <div class="footer-contact">
-            <h3>Contato</h3>
-            <p>📩 Email:</p>
-            <a href="mailto:jhonnysilva.jh606@gmail.com">contato</a>
-        </div>
-
     </div>
-
-    <div class="footer-bottom">
-        © 2026 ShapeCalc. Todos os direitos reservados.
-    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
 </footer>
-
-<script>
-document.getElementById("peso").focus();
-</script>
-
-<script src="js/main.js"></script>
 
 </body>
 </html>

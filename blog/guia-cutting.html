@@ -7,9 +7,8 @@
     <meta name="description" content="Aprenda como fazer cutting da forma correta: déficit calórico, macros, dieta e erros comuns. Guia completo para perder gordura mantendo massa muscular.">
 
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="icon" href="../img/favicon.png">
 
@@ -28,17 +27,17 @@
 </head>
 
 <body>
-<canvas id="particles"></canvas>
-
 <header>
-    <h1 id="logo">ShapeCalc</h1>
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 
     <nav id="menu">
         <a href="../index.html">Início</a>
         <a href="../tdee-calculadora.html">TDEE</a>
         <a href="../macronutrientes.html">Macronutrientes</a>
-        <a href="../guia-cutting.html">Cutting</a>
+        <a href="../calorias-cutting.html">Cutting</a>
         <a href="../calorias-bulking.html">Bulking</a>
         <a href="../blog.html">Blog</a>
     </nav>
@@ -55,7 +54,7 @@ O <strong>cutting</strong> é o processo de reduzir gordura corporal mantendo o 
 Diferente do que muitos pensam, não se trata apenas de comer menos — é estratégia.
 </p>
 
-<div style="background: rgba(0,255,170,0.08); padding: 15px; border-radius: 10px; margin: 20px 0;">
+<div class="callout callout-green">
 <strong>Resumo rápido:</strong><br>
 Déficit calórico + proteína alta + treino pesado = definição com qualidade
 </div>
@@ -72,7 +71,7 @@ Sem déficit, não existe perda de gordura. Mas exagerar pode fazer você perder
 <li><strong>Agressivo:</strong> risco de perda muscular</li>
 </ul>
 
-<div class="ad-space" style="margin: 20px 0;"></div>
+<div class="ad"></div>
 
 <h2>2. Macronutrientes no cutting</h2>
 
@@ -91,8 +90,8 @@ Mantenha entre <strong>0.6g e 0.8g por kg</strong>.
 O restante das calorias vem dos carboidratos.
 </p>
 
-<div style="text-align:center; margin: 25px 0;">
-<a href="../macronutrientes.html" class="link-card">Calcular meus macros</a>
+<div class="article-cta">
+<a href="../macronutrientes.html" class="btn-primary">Calcular meus macros</a>
 </div>
 
 <h2>3. Treino durante o cutting</h2>
@@ -117,13 +116,13 @@ Use como ferramenta, não como punição. Caminhada (LISS) funciona muito bem.
 Com o tempo, seu corpo reduz o gasto energético (termogênese adaptativa).
 </p>
 
-<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+<div class="callout callout-neutral">
 💡 Dica: mantenha 8–10 mil passos por dia para evitar queda no gasto calórico.
 </div>
 
 <h2>Exemplo prático</h2>
 
-<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+<div class="callout callout-neutral">
 <p>
 Se seu TDEE é 2500 kcal:
 </p>
@@ -152,7 +151,7 @@ Se seu TDEE é 2500 kcal:
 <li>Ajuste calorias conforme progresso</li>
 </ul>
 
-<blockquote style="border-left: 4px solid var(--primary-color); padding-left: 15px; font-style: italic;">
+<blockquote>
 Cutting é consistência + ajuste fino. Não pressa.
 </blockquote>
 
@@ -171,7 +170,7 @@ As recomendações deste guia são baseadas em evidências de nutrição esporti
 
 </article>
 
-<div class="ad-space" style="margin: 40px 0;"></div>
+<div class="ad"></div>
 
 </main>
 
@@ -180,31 +179,29 @@ As recomendações deste guia são baseadas em evidências de nutrição esporti
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-brand">
-            <h2>ShapeCalc</h2>
-            <p>Ciência e tecnologia aplicadas à sua evolução física.</p>
+            <h2>Shape<span style="color:var(--accent)">Calc</span></h2>
+            <p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p>
         </div>
         <div class="footer-links">
             <h3>Ferramentas</h3>
-            <a href="../tdee-calculadora.html">Cálculo TDEE</a>
-            <a href="../macronutrientes.html">Macros</a>
-            <a href="../calorias-cutting.html">Dieta Cutting</a>
-            <a href="../calorias-bulking.html">Dieta Bulking</a>
+            <a href="../tdee-calculadora.html">TDEE</a>
+            <a href="../macronutrientes.html">Macronutrientes</a>
+            <a href="../calorias-cutting.html">Cutting</a>
+            <a href="../calorias-bulking.html">Bulking</a>
         </div>
         <div class="footer-links">
-            <h3>Institucional</h3>
+            <h3>Conteúdo</h3>
+            <a href="../blog.html">Blog</a>
             <a href="../sobre.html">Sobre</a>
+        </div>
+        <div class="footer-links">
+            <h3>Legal</h3>
             <a href="../privacidade.html">Privacidade</a>
             <a href="../termos.html">Termos</a>
-        </div>
-        <div class="footer-contact">
-            <h3>Contato</h3>
-            <p>📩 Email:</p>
-            <a href="mailto:jhonnysilva.jh606@gmail.com">contato@shapecalc.com.br</a>
+            <a href="../contato.html">Contato</a>
         </div>
     </div>
-    <div class="footer-bottom">
-        © 2026 ShapeCalc. Todos os direitos reservados.
-    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
 </footer>
 
 </body>

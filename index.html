@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShapeCalc</title>
-    <!-- Adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042"
-     crossorigin="anonymous"></script>
+    <title>ShapeCalc — Calculadoras de TDEE, Macros e Calorias</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042" crossorigin="anonymous"></script>
     <meta name="description" content="ShapeCalc: ferramentas para calcular TDEE, macros, Cutting e Bulking e alcançar seus objetivos de forma prática.">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="img/favicon.png">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-84XJNCCE9P"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -24,12 +19,13 @@
 </head>
 
 <body>
-<canvas id="particles"></canvas>
 
 <header>
-    <h1 id="logo">ShapeCalc</h1>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
 
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 
     <nav id="menu">
         <a href="index.html">Início</a>
@@ -44,50 +40,53 @@
 <main class="container">
 
     <!-- HERO -->
-    <section class="hero card">
-        <h2>SUA MELHOR FORMA, <span>CÁLCULO PRECISO</span></h2>
-        
-        <p>
-            Calcule TDEE, macronutrientes e calorias ideais para Cutting ou Bulking com precisão e rapidez.
-        </p>
-
-        <!-- CTA -->
+    <section class="hero">
+        <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);display:block;margin-bottom:14px;">Nutrição de performance</span>
+        <h2>SUA MELHOR FORMA,<br><em>CÁLCULO PRECISO</em></h2>
+        <p>Calcule TDEE, macronutrientes e calorias ideais para Cutting ou Bulking. Sem enrolação.</p>
         <div class="hero-actions">
-            <a href="tdee-calculadora.html" class="btn-primary">Começar pelo TDEE</a>
-            <a href="macronutrientes.html" class="btn-secondary">Ver Macronutrientes</a>
+            <a href="tdee-calculadora.html" class="btn-primary">Calcular TDEE</a>
+            <a href="macronutrientes.html" class="btn-secondary">Macronutrientes</a>
         </div>
     </section>
 
-    <div class="ad">
-    <!-- AdSense -->
-    </div>
+    <div class="ad"></div>
 
     <!-- FERRAMENTAS -->
-    <section class="tools">
-        <h1>Ferramentas</h1>
+    <section>
+        <div class="section-header">
+            <h2>Ferramentas</h2>
+            <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);font-family:'Barlow Condensed',sans-serif;">4 calculadoras</span>
+        </div>
 
         <div class="tools-grid">
-
-            <a href="tdee-calculadora.html" class="card tool-card">
-                <h4>TDEE</h4>
-                <p>Calcule seu gasto calórico diário</p>
+            <a href="tdee-calculadora.html" class="tool-card">
+                <div class="card">
+                    <h4>TDEE</h4>
+                    <p>Gasto calórico diário total. Ponto de partida para qualquer objetivo.</p>
+                </div>
             </a>
 
-            <a href="macronutrientes.html" class="card tool-card">
-                <h4>Macronutrientes</h4>
-                <p>Distribuição ideal de proteínas, carboidratos e gorduras</p>
+            <a href="macronutrientes.html" class="tool-card">
+                <div class="card">
+                    <h4>Macronutrientes</h4>
+                    <p>Distribuição ideal de proteínas, carboidratos e gorduras.</p>
+                </div>
             </a>
 
-            <a href="calorias-cutting.html" class="card tool-card">
-                <h4>Cutting</h4>
-                <p>Calorias ideais para perda de gordura</p>
+            <a href="calorias-cutting.html" class="tool-card">
+                <div class="card">
+                    <h4>Cutting</h4>
+                    <p>Calorias ideais para perda de gordura com déficit calculado.</p>
+                </div>
             </a>
 
-            <a href="calorias-bulking.html" class="card tool-card">
-                <h4>Bulking</h4>
-                <p>Calorias ideais para ganho de massa</p>
+            <a href="calorias-bulking.html" class="tool-card">
+                <div class="card">
+                    <h4>Bulking</h4>
+                    <p>Calorias para ganho de massa com superávit controlado.</p>
+                </div>
             </a>
-
         </div>
     </section>
 
@@ -99,39 +98,30 @@
 
 <footer class="footer">
     <div class="footer-container">
-
         <div class="footer-brand">
-            <h2>ShapeCalc</h2>
+            <h2>Shape<span style="color:var(--accent)">Calc</span></h2>
             <p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p>
         </div>
-
         <div class="footer-links">
-            <h3>Navegação</h3>
-            <a href="index.html">Início</a>
+            <h3>Ferramentas</h3>
             <a href="tdee-calculadora.html">TDEE</a>
-            <a href="macronutrientes.html">Macros</a>
+            <a href="macronutrientes.html">Macronutrientes</a>
             <a href="calorias-cutting.html">Cutting</a>
             <a href="calorias-bulking.html">Bulking</a>
         </div>
-
         <div class="footer-links">
-            <h3>Institucional</h3>
+            <h3>Conteúdo</h3>
+            <a href="blog.html">Blog</a>
             <a href="sobre.html">Sobre</a>
+        </div>
+        <div class="footer-links">
+            <h3>Legal</h3>
             <a href="privacidade.html">Privacidade</a>
             <a href="termos.html">Termos</a>
+            <a href="contato.html">Contato</a>
         </div>
-
-        <div class="footer-contact">
-            <h3>Contato</h3>
-            <p>📩 Email:</p>
-            <a href="mailto:jhonnysilva.jh606@gmail.com">contato</a>
-        </div>
-
     </div>
-
-    <div class="footer-bottom">
-        © 2026 ShapeCalc. Todos os direitos reservados.
-    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
 </footer>
 
 </body>

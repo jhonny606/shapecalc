@@ -7,9 +7,8 @@
     <meta name="description" content="O guia definitivo sobre TDEE. Entenda o gasto calórico total, metabolismo basal e como ajustar sua dieta para bulking ou cutting com precisão científica.">
 
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="../img/favicon.png">
 
@@ -26,12 +25,12 @@
 </head>
 
 <body>
-<canvas id="particles"></canvas>
-
 <header>
-    <h1 id="logo">ShapeCalc</h1>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
 
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 
     <nav id="menu">
         <a href="../index.html">Início</a>
@@ -53,7 +52,7 @@
         Entender esse conceito é o primeiro passo para transformar seu físico com previsibilidade e estratégia.
     </p>
 
-    <div style="background: rgba(0, 255, 170, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0;">
+    <div class="callout callout-green">
         <strong>Resumo rápido:</strong>  
         TDEE é o total de calorias que você gasta por dia.  
         👉 Comer menos = emagrece  
@@ -72,7 +71,7 @@
         <li><strong>NEAT:</strong> Movimento do dia a dia.</li>
     </ul>
 
-    <div class="ad-space" style="margin: 20px 0;"></div>
+    <div class="ad"></div>
 
     <h2>Entendendo na prática</h2>
     <p>
@@ -99,31 +98,31 @@
     <h3>2. Aplicar fator de atividade</h3>
 
     <div class="table-responsive">
-        <table class="custom-table" style="width:100%; border-collapse: collapse; margin-top: 10px;">
-            <tr style="background: rgba(255,255,255,0.05);">
-                <th style="padding: 10px;">Nível</th>
-                <th style="padding: 10px;">Descrição</th>
-                <th style="padding: 10px;">Multiplicador</th>
+        <table class="custom-table">
+            <tr>
+                <th>Nível</th>
+                <th>Descrição</th>
+                <th>Multiplicador</th>
             </tr>
             <tr>
-                <td style="padding: 10px;">Sedentário</td>
-                <td style="padding: 10px;">Pouco movimento</td>
-                <td style="padding: 10px;">x1.2</td>
+                <td>Sedentário</td>
+                <td>Pouco movimento</td>
+                <td>x1.2</td>
             </tr>
             <tr>
-                <td style="padding: 10px;">Leve</td>
-                <td style="padding: 10px;">Treino leve</td>
-                <td style="padding: 10px;">x1.375</td>
+                <td>Leve</td>
+                <td>Treino leve</td>
+                <td>x1.375</td>
             </tr>
             <tr>
-                <td style="padding: 10px;">Moderado</td>
-                <td style="padding: 10px;">Treino regular</td>
-                <td style="padding: 10px;">x1.55</td>
+                <td>Moderado</td>
+                <td>Treino regular</td>
+                <td>x1.55</td>
             </tr>
             <tr>
-                <td style="padding: 10px;">Intenso</td>
-                <td style="padding: 10px;">Treino pesado diário</td>
-                <td style="padding: 10px;">x1.725</td>
+                <td>Intenso</td>
+                <td>Treino pesado diário</td>
+                <td>x1.725</td>
             </tr>
         </table>
     </div>
@@ -133,14 +132,14 @@
         <p class="image-caption">Exemplo visual de como o nível de atividade impacta o TDEE.</p>
     </div>
 
-    <div style="margin: 30px 0; text-align: center;">
-        <p><strong>Quer evitar erro?</strong></p>
+    <div class="article-cta">
+        <p>Quer evitar erro?</p>
         <a href="../tdee-calculadora.html" class="btn-primary">Calcular automaticamente</a>
     </div>
 
     <h2>Exemplo real (simplificado)</h2>
 
-    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+    <div class="callout callout-neutral">
         <p><strong>Homem, 80kg, moderadamente ativo</strong></p>
         <ul>
             <li>BMR ≈ 1800 kcal</li>
@@ -161,7 +160,7 @@
         Adicione de <strong>200 a 400 kcal</strong>.
     </p>
 
-    <div style="background: rgba(255, 200, 0, 0.08); padding: 15px; border-radius: 10px; margin: 20px 0;">
+    <div class="callout callout-yellow">
         ⚠️ Superávit alto demais = ganho de gordura, não músculo.
     </div>
 
@@ -182,7 +181,7 @@
         <li>Se nada mudar → ajuste 100 kcal</li>
     </ul>
 
-    <blockquote style="border-left: 4px solid var(--primary-color); padding-left: 15px; font-style: italic;">
+    <blockquote>
         Resultado vem de consistência + ajuste fino. O TDEE é só o começo.
     </blockquote>
 
@@ -200,7 +199,7 @@
 
 </article>
 
-    <div class="ad-space" style="margin: 40px 0; text-align: center;"></div>
+    <div class="ad"></div>
 
 </main>
 
@@ -209,31 +208,29 @@
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-brand">
-            <h2>ShapeCalc</h2>
-            <p>Ciência e tecnologia aplicadas à sua evolução física.</p>
+            <h2>Shape<span style="color:var(--accent)">Calc</span></h2>
+            <p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p>
         </div>
         <div class="footer-links">
             <h3>Ferramentas</h3>
-            <a href="../tdee-calculadora.html">Cálculo TDEE</a>
-            <a href="../macronutrientes.html">Macros</a>
-            <a href="../calorias-cutting.html">Dieta Cutting</a>
-            <a href="../calorias-bulking.html">Dieta Bulking</a>
+            <a href="../tdee-calculadora.html">TDEE</a>
+            <a href="../macronutrientes.html">Macronutrientes</a>
+            <a href="../calorias-cutting.html">Cutting</a>
+            <a href="../calorias-bulking.html">Bulking</a>
         </div>
         <div class="footer-links">
-            <h3>Institucional</h3>
+            <h3>Conteúdo</h3>
+            <a href="../blog.html">Blog</a>
             <a href="../sobre.html">Sobre</a>
+        </div>
+        <div class="footer-links">
+            <h3>Legal</h3>
             <a href="../privacidade.html">Privacidade</a>
             <a href="../termos.html">Termos</a>
-        </div>
-        <div class="footer-contact">
-            <h3>Contato</h3>
-            <p>📩 Email:</p>
-            <a href="mailto:jhonnysilva.jh606@gmail.com">contato@shapecalc.com.br</a>
+            <a href="../contato.html">Contato</a>
         </div>
     </div>
-    <div class="footer-bottom">
-        © 2026 ShapeCalc. Todos os direitos reservados.
-    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
 </footer>
 
 </body>

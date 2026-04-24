@@ -11,6 +11,23 @@ function toggleMenu() {
     button.classList.toggle("active");
 }
 
+// Fechar menu ao clicar em link
+document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll("nav a");
+    navLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const menu = document.getElementById("menu");
+            const logo = document.getElementById("logo");
+            const button = document.querySelector(".menu-toggle");
+            if (menu && menu.classList.contains("active")) {
+                menu.classList.remove("active");
+                logo && logo.classList.remove("hidden");
+                button && button.classList.remove("active");
+            }
+        });
+    });
+});
+
 // ==============================
 // TDEE
 // ==============================
@@ -20,47 +37,35 @@ function calcularTDEE() {
     let idade = parseInt(document.getElementById("idade").value);
     let sexo = document.getElementById("sexo").value;
     let atividade = parseFloat(document.getElementById("atividade").value);
-    let bf = parseFloat(document.getElementById("bf")?.value); // percentual de gordura opcional
+    let bf = parseFloat(document.getElementById("bf")?.value);
 
-    if (peso <= 0 || altura <= 0 || idade <= 0 || !atividade) {
-        document.getElementById("resultado").innerText =
-            "Preencha todos os campos obrigatórios corretamente!";
+    let resultado = document.getElementById("resultado");
+
+    if (!peso || !altura || !idade || peso <= 0 || altura <= 0 || idade <= 0) {
+        resultado.innerHTML = "<span style='color:var(--text-muted);font-size:0.9rem;'>Preencha todos os campos obrigatórios.</span>";
         return;
     }
 
     let tmb;
 
     if (!isNaN(bf) && bf > 0 && bf < 100) {
-        // Usando Katch-McArdle baseado em massa magra
-        let massaMagro = peso * (1 - bf / 100);
-        tmb = 370 + (21.6 * massaMagro);
+        let massaMagra = peso * (1 - bf / 100);
+        tmb = 370 + (21.6 * massaMagra);
     } else {
-        // Usando Mifflin-St Jeor
         tmb = (sexo === "masculino")
             ? (10 * peso) + (6.25 * altura) - (5 * idade) + 5
             : (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
     }
 
     let tdee = tmb * atividade;
-
     let cutting = tdee - 500;
     let bulking = tdee + 500;
 
-    let classificacao = "";
-    let dica = "";
+    let classificacao = tdee < 2000 ? "Baixo gasto calórico"
+        : tdee < 2800 ? "Gasto moderado"
+        : "Alto gasto calórico";
 
-    if (tdee < 2000) {
-        classificacao = "Baixo gasto calórico";
-        dica = "Ideal manter controle na dieta.";
-    } else if (tdee < 2800) {
-        classificacao = "Gasto moderado";
-        dica = "Pequenos ajustes já trazem bons resultados.";
-    } else {
-        classificacao = "Alto gasto calórico";
-        dica = "Ótimo para bulking ou recomposição.";
-    }
-
-    // salvar
+    // Salvar
     localStorage.setItem("tdee", tdee);
     localStorage.setItem("peso", peso);
     localStorage.setItem("altura", altura);
@@ -69,26 +74,28 @@ function calcularTDEE() {
     localStorage.setItem("atividade", atividade);
     if (bf) localStorage.setItem("bf", bf);
 
-    let resultado = document.getElementById("resultado");
-
     resultado.innerHTML = `
-        🔥 TDEE: <strong>${Math.round(tdee)} kcal</strong><br>
-        TMB: ${Math.round(tmb)} kcal<br>
-        ${bf ? `📊 Percentual de gordura: ${bf}%<br>` : ""}<br>
+        <strong>${Math.round(tdee)} kcal</strong>
+        <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${classificacao}</span>
 
-        <strong>${classificacao}</strong><br>
-        <span style="color:#9ca3af">${dica}</span>
+        <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
+            <div style="background:#0a0a0a;padding:16px;text-align:center;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:#ff6b6b;">${Math.round(cutting)}</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Cutting <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('cutting')">usar</a></div>
+            </div>
+            <div style="background:#0a0a0a;padding:16px;text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border);">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:var(--accent);">${Math.round(tdee)}</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Manutenção <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('manutencao')">usar</a></div>
+            </div>
+            <div style="background:#0a0a0a;padding:16px;text-align:center;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:#60a5fa;">${Math.round(bulking)}</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Bulking <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('bulking')">usar</a></div>
+            </div>
+        </div>
 
-        <hr style="margin:15px 0;">
-
-        🔻 Cutting: ${Math.round(cutting)} kcal 
-        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('cutting')">(usar)</a><br>
-
-        ⚖️ Manutenção: ${Math.round(tdee)} kcal 
-        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('manutencao')">(usar)</a><br>
-
-        🔺 Bulking: ${Math.round(bulking)} kcal 
-        <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('bulking')">(usar)</a>
+        <div style="margin-top:14px;font-size:0.8rem;color:var(--text-muted);">
+            TMB: ${Math.round(tmb)} kcal ${bf ? `&nbsp;·&nbsp; Gordura corporal: ${bf}%` : ""}
+        </div>
     `;
 }
 
@@ -109,17 +116,16 @@ function calcularCutting() {
     if (!tdee) {
         document.getElementById("resultado").innerHTML = `
             <div class="alerta">
-                <p>Calcule seu TDEE primeiro!</p>
+                <p>Calcule seu TDEE primeiro.</p>
                 <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
-            </div>
-            `;
+            </div>`;
         return;
     }
 
     let calorias = tdee - deficit;
-
     document.getElementById("resultado").innerHTML =
-        `🔻 Calorias para Cutting: <strong>${Math.round(calorias)} kcal</strong>`;
+        `<strong>${Math.round(calorias)} kcal</strong>
+        <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Calorias para Cutting</span>`;
 }
 
 // ==============================
@@ -132,17 +138,16 @@ function calcularBulking() {
     if (!tdee) {
         document.getElementById("resultado").innerHTML = `
             <div class="alerta">
-                <p>Calcule seu TDEE primeiro!</p>
+                <p>Calcule seu TDEE primeiro.</p>
                 <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
-            </div>
-            `;
+            </div>`;
         return;
     }
 
     let calorias = tdee + superavit;
-
     document.getElementById("resultado").innerHTML =
-        `🔺 Calorias para Bulking: <strong>${Math.round(calorias)} kcal</strong>`;
+        `<strong>${Math.round(calorias)} kcal</strong>
+        <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">Calorias para Bulking</span>`;
 }
 
 // ==============================
@@ -155,112 +160,92 @@ function calcularMacros() {
     if (!tdee || !peso) {
         document.getElementById("resultado").innerHTML = `
         <div class="alerta">
-            <p>Calcule seu TDEE primeiro!</p>
+            <p>Calcule seu TDEE primeiro.</p>
             <a href="tdee-calculadora.html" class="btn-link">Calcular TDEE</a>
-        </div>
-        `;
+        </div>`;
         return;
     }
 
     let objetivo = document.getElementById("objetivo").value;
     let intensidade = document.getElementById("intensidade")?.value;
 
-    let calorias = tdee;
     let ajuste = 0;
-
     if (objetivo === "cutting") {
         if (intensidade === "leve") ajuste = -250;
         if (intensidade === "moderado") ajuste = -500;
         if (intensidade === "agressivo") ajuste = -750;
     }
-
     if (objetivo === "bulking") {
         if (intensidade === "leve") ajuste = 250;
         if (intensidade === "moderado") ajuste = 500;
         if (intensidade === "agressivo") ajuste = 750;
     }
 
-    calorias += ajuste;
-
+    let calorias = tdee + ajuste;
     let proteina = peso * (objetivo === "cutting" ? 2 : 1.8);
     let gordura = peso * (objetivo === "bulking" ? 1 : 0.8);
-    let carbo = (calorias - (proteina * 4 + gordura * 9)) / 4;
+    let carbo = Math.max(0, (calorias - (proteina * 4 + gordura * 9)) / 4);
 
-    carbo = Math.max(0, carbo);
+    let estimativa = ajuste !== 0
+        ? (objetivo === "cutting"
+            ? `Perda estimada: ${((Math.abs(ajuste) * 7) / 7700).toFixed(2)} kg/semana`
+            : `Ganho estimado: ${((ajuste * 7) / 7700).toFixed(2)} kg/semana`)
+        : "Manutenção de peso";
 
-    let estimativa = "";
-
-    if (ajuste !== 0) {
-        let kg = (Math.abs(ajuste) * 7) / 7700;
-        estimativa = objetivo === "cutting"
-            ? `Perda estimada: ${kg.toFixed(2)} kg/semana`
-            : `Ganho estimado: ${kg.toFixed(2)} kg/semana`;
-    } else {
-        estimativa = "Manutenção de peso";
-    }
-
-    // ==========================
-    // RESULTADO TEXTO
-    // ==========================
     document.getElementById("resultado").innerHTML = `
-        🔥 Calorias: ${Math.round(calorias)} kcal <br><br>
-        🥩 Proteína: ${Math.round(proteina)}g <br>
-        🥑 Gordura: ${Math.round(gordura)}g <br>
-        🍞 Carboidratos: ${Math.round(carbo)}g <br><br>
-        <span style="color:#9ca3af">${estimativa}</span>
+        <strong>${Math.round(calorias)} kcal</strong>
+        <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${estimativa}</span>
+
+        <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
+            <div style="background:#0a0a0a;padding:16px;text-align:center;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:#60a5fa;">${Math.round(proteina)}g</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Proteína</div>
+            </div>
+            <div style="background:#0a0a0a;padding:16px;text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border);">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:var(--accent);">${Math.round(carbo)}g</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Carboidratos</div>
+            </div>
+            <div style="background:#0a0a0a;padding:16px;text-align:center;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:#f59e0b;">${Math.round(gordura)}g</div>
+                <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Gordura</div>
+            </div>
+        </div>
     `;
 
-    // ==========================
-    // GRÁFICO
-    // ==========================
+    // Gráfico
     const canvas = document.getElementById("graficoMacros");
-
     if (!canvas) return;
-
-    // destruir gráfico anterior
-    if (window.grafico) {
-        window.grafico.destroy();
-    }
+    if (window.grafico) window.grafico.destroy();
 
     const totalMacros = proteina + carbo + gordura;
-
     const ctx = canvas.getContext("2d");
 
     window.grafico = new Chart(ctx, {
-        type: "pie",
+        type: "doughnut",
         data: {
             labels: ["Proteína", "Carboidrato", "Gordura"],
             datasets: [{
                 data: [proteina, carbo, gordura],
-                backgroundColor: [
-                    "#3b82f6",
-                    "#22c55e",
-                    "#eab308"
-                ],
-                borderWidth: 1
+                backgroundColor: ["#60a5fa", "#C8FF00", "#f59e0b"],
+                borderWidth: 0,
+                borderRadius: 2
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            animation: {
-                duration: 800,
-                easing: "easeOutQuart"
-            },
+            cutout: "65%",
+            animation: { duration: 600, easing: "easeOutQuart" },
             plugins: {
                 legend: {
                     position: "bottom",
-                    labels: {
-                        color: "#e5e7eb",
-                        padding: 15
-                    }
+                    labels: { color: "#999", padding: 16, font: { family: "'Barlow', sans-serif", size: 12 } }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
                             let value = context.raw;
                             let percent = ((value / totalMacros) * 100).toFixed(1);
-
                             return `${context.label}: ${Math.round(value)}g (${percent}%)`;
                         }
                     }
@@ -270,40 +255,30 @@ function calcularMacros() {
     });
 }
 
+// Alias so onchange="toggleIntensidade()" in HTML still works
+function toggleIntensidade() { atualizarIntensidade(); }
+
 // ==============================
-// ATUALIZAÇÃO GLOBAL AO CARREGAR
+// DOMContentLoaded
 // ==============================
 document.addEventListener("DOMContentLoaded", function () {
-
     let tdee = localStorage.getItem("tdee");
     let objetivoSalvo = localStorage.getItem("objetivo");
 
-    // preencher TDEE nas páginas
     let tdeeEl = document.getElementById("tdee");
-    if (tdeeEl && tdee) {
-        tdeeEl.innerText = Math.round(tdee) + " kcal";
-    }
+    if (tdeeEl && tdee) tdeeEl.innerText = Math.round(tdee) + " kcal";
 
     let tdeeMacro = document.getElementById("tdee-macro");
-    if (tdeeMacro && tdee) {
-        tdeeMacro.innerText = Math.round(tdee);
-    }
+    if (tdeeMacro && tdee) tdeeMacro.innerText = Math.round(tdee);
 
-    // auto selecionar objetivo na página de macros
     let objetivoSelect = document.getElementById("objetivo");
-    if (objetivoSelect && objetivoSalvo) {
-        objetivoSelect.value = objetivoSalvo;
-    }
+    if (objetivoSelect && objetivoSalvo) objetivoSelect.value = objetivoSalvo;
 
-    // mostrar intensidade corretamente
     function atualizarIntensidade() {
         let container = document.getElementById("intensidade-container");
         if (!container || !objetivoSelect) return;
-
         container.style.display =
-            (objetivoSelect.value === "cutting" || objetivoSelect.value === "bulking")
-                ? "block"
-                : "none";
+            (objetivoSelect.value === "cutting" || objetivoSelect.value === "bulking") ? "block" : "none";
     }
 
     if (objetivoSelect) {
@@ -311,78 +286,3 @@ document.addEventListener("DOMContentLoaded", function () {
         atualizarIntensidade();
     }
 });
-
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-let particlesArray;
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Ajustar no resize
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
-});
-
-class Particle {
-    constructor(x, y, size, speedX, speedY) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.speedX = speedX;
-        this.speedY = speedY;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // rebater nas bordas
-        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-    }
-
-    draw() {
-        const colors = [
-  "rgba(163,255,51,0.25)",
-  "rgba(34,211,238,0.2)"
-];
-
-ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-function init() {
-    particlesArray = [];
-    let numberOfParticles = window.innerWidth < 768 ? 30 : 60;
-
-    for (let i = 0; i < numberOfParticles; i++) {
-        let size = Math.random() * 2 + 1;
-        let x = Math.random() * canvas.width;
-        let y = Math.random() * canvas.height;
-        let speedX = (Math.random() - 0.5) * 0.3;
-        let speedY = (Math.random() - 0.5) * 0.3;
-
-        particlesArray.push(new Particle(x, y, size, speedX, speedY));
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-    }
-
-    requestAnimationFrame(animate);
-}
-
-init();
-animate();
