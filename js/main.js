@@ -74,6 +74,17 @@ function calcularTDEE() {
     localStorage.setItem("atividade", atividade);
     if (bf) localStorage.setItem("bf", bf);
 
+    // Mostrar botão de download da planilha
+    let atividadeVal = document.getElementById("atividade") ? document.getElementById("atividade").value : atividade;
+    let objetivoVal  = localStorage.getItem("objetivo") || "2";
+    mostrarBotaoDownload({
+        peso, altura, idade,
+        sexo: sexo === "masculino" ? "M" : "F",
+        bf: (!isNaN(bf) && bf > 0) ? bf : '',
+        atividade: atividadeVal,
+        objetivo: objetivoVal === "cutting" ? 1 : objetivoVal === "bulking" ? 3 : 2
+    });
+
     resultado.innerHTML = `
         <strong>${Math.round(tdee)} kcal</strong>
         <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${classificacao}</span>
@@ -253,6 +264,31 @@ function calcularMacros() {
             }
         }
     });
+}
+
+
+// ==============================
+// DOWNLOAD PLANILHA PERSONALIZADA
+// ==============================
+function mostrarBotaoDownload(dados) {
+    const baseUrl = 'https://shapecalc-admin.onrender.com/download/planilha';
+    const params = new URLSearchParams({
+        peso:      dados.peso      || '',
+        altura:    dados.altura    || '',
+        idade:     dados.idade     || '',
+        sexo:      dados.sexo      || 'M',
+        bf:        dados.bf        || '',
+        atividade: dados.atividade || 2,
+        objetivo:  dados.objetivo  || 2,
+        refeicoes: 4
+    });
+    const link = document.getElementById('btn-download-planilha');
+    const box  = document.getElementById('download-planilha-box');
+    if (link && box) {
+        link.href = baseUrl + '?' + params.toString();
+        box.style.display = 'block';
+        setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
 }
 
 // Alias so onchange="toggleIntensidade()" in HTML still works
