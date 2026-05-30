@@ -1,3 +1,33 @@
+
+// ==============================
+// TEMA CLARO / ESCURO
+// ==============================
+function initTheme() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    if (saved === 'light') {
+        document.body.classList.add('light-mode');
+    }
+    updateThemeIcon();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    const isLight = document.body.classList.contains('light-mode');
+    btn.textContent = isLight ? '🌙' : '☀️';
+    btn.title = isLight ? 'Mudar para tema escuro' : 'Mudar para tema claro';
+}
+
+// Inicializar tema ao carregar
+document.addEventListener('DOMContentLoaded', initTheme);
+
 // ==============================
 // MENU MOBILE
 // ==============================
@@ -73,17 +103,6 @@ function calcularTDEE() {
     localStorage.setItem("sexo", sexo);
     localStorage.setItem("atividade", atividade);
     if (bf) localStorage.setItem("bf", bf);
-
-    // Mostrar botão de download da planilha
-    let atividadeVal = document.getElementById("atividade") ? document.getElementById("atividade").value : atividade;
-    let objetivoVal  = localStorage.getItem("objetivo") || "2";
-    mostrarBotaoDownload({
-        peso, altura, idade,
-        sexo: sexo === "masculino" ? "M" : "F",
-        bf: (!isNaN(bf) && bf > 0) ? bf : '',
-        atividade: atividadeVal,
-        objetivo: objetivoVal === "cutting" ? 1 : objetivoVal === "bulking" ? 3 : 2
-    });
 
     resultado.innerHTML = `
         <strong>${Math.round(tdee)} kcal</strong>
@@ -264,31 +283,6 @@ function calcularMacros() {
             }
         }
     });
-}
-
-
-// ==============================
-// DOWNLOAD PLANILHA PERSONALIZADA
-// ==============================
-function mostrarBotaoDownload(dados) {
-    const baseUrl = 'https://shapecalc-admin.onrender.com/download/planilha';
-    const params = new URLSearchParams({
-        peso:      dados.peso      || '',
-        altura:    dados.altura    || '',
-        idade:     dados.idade     || '',
-        sexo:      dados.sexo      || 'M',
-        bf:        dados.bf        || '',
-        atividade: dados.atividade || 2,
-        objetivo:  dados.objetivo  || 2,
-        refeicoes: 4
-    });
-    const link = document.getElementById('btn-download-planilha');
-    const box  = document.getElementById('download-planilha-box');
-    if (link && box) {
-        link.href = baseUrl + '?' + params.toString();
-        box.style.display = 'block';
-        setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-    }
 }
 
 // Alias so onchange="toggleIntensidade()" in HTML still works

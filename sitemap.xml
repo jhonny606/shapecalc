@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.shapecalc.com.br/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.shapecalc.com.br/tdee-calculadora.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.shapecalc.com.br/macronutrientes.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.shapecalc.com.br/calorias-cutting.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/calorias-bulking.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/sobre.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.shapecalc.com.br/contato.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/como-calcular-tdee.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/guia-cutting.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/guia-bulking.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/quantas-calorias-por-dia.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/o-que-sao-macronutrientes.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/tdee-calculadora.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/macronutrientes.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/calorias-cutting.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/calorias-bulking.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Institucional -->
+  <url>
+    <loc>https://www.shapecalc.com.br/sobre.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/privacidade.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/termos.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.shapecalc.com.br/contato.html</loc>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>
