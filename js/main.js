@@ -24,7 +24,6 @@ function updateThemeIcon() {
     btn.title = isLight ? 'Mudar para tema escuro' : 'Mudar para tema claro';
 }
 
-// Inicializar tema ao carregar
 document.addEventListener('DOMContentLoaded', initTheme);
 
 // ==============================
@@ -34,13 +33,11 @@ function toggleMenu() {
     const menu = document.getElementById("menu");
     const logo = document.getElementById("logo");
     const button = document.querySelector(".menu-toggle");
-
     menu.classList.toggle("active");
     logo.classList.toggle("hidden");
     button.classList.toggle("active");
 }
 
-// Fechar menu ao clicar em link
 document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.querySelectorAll("nav a");
     navLinks.forEach(link => {
@@ -76,7 +73,6 @@ function calcularTDEE() {
     }
 
     let tmb;
-
     if (!isNaN(bf) && bf > 0 && bf < 100) {
         let massaMagra = peso * (1 - bf / 100);
         tmb = 370 + (21.6 * massaMagra);
@@ -88,13 +84,12 @@ function calcularTDEE() {
 
     let tdee = tmb * atividade;
     let cutting = tdee - 500;
-    let bulking = tdee + 500;
+    let bulking  = tdee + 500;
 
     let classificacao = tdee < 2000 ? "Baixo gasto calórico"
         : tdee < 2800 ? "Gasto moderado"
         : "Alto gasto calórico";
 
-    // Salvar
     localStorage.setItem("tdee", tdee);
     localStorage.setItem("peso", peso);
     localStorage.setItem("altura", altura);
@@ -103,7 +98,6 @@ function calcularTDEE() {
     localStorage.setItem("atividade", atividade);
     if (bf) localStorage.setItem("bf", bf);
 
-    // Mostrar botão de download da planilha
     let atividadeVal = document.getElementById("atividade") ? document.getElementById("atividade").value : atividade;
     let objetivoVal  = localStorage.getItem("objetivo") || "2";
     mostrarBotaoDownload({
@@ -152,7 +146,6 @@ function setObjetivo(tipo) {
 function calcularCutting() {
     let tdee = parseFloat(localStorage.getItem("tdee"));
     let deficit = parseFloat(document.getElementById("deficit").value);
-
     if (!tdee) {
         document.getElementById("resultado").innerHTML = `
             <div class="alerta">
@@ -161,7 +154,6 @@ function calcularCutting() {
             </div>`;
         return;
     }
-
     let calorias = tdee - deficit;
     document.getElementById("resultado").innerHTML =
         `<strong>${Math.round(calorias)} kcal</strong>
@@ -174,7 +166,6 @@ function calcularCutting() {
 function calcularBulking() {
     let tdee = parseFloat(localStorage.getItem("tdee"));
     let superavit = parseFloat(document.getElementById("superavit").value);
-
     if (!tdee) {
         document.getElementById("resultado").innerHTML = `
             <div class="alerta">
@@ -183,7 +174,6 @@ function calcularBulking() {
             </div>`;
         return;
     }
-
     let calorias = tdee + superavit;
     document.getElementById("resultado").innerHTML =
         `<strong>${Math.round(calorias)} kcal</strong>
@@ -196,7 +186,6 @@ function calcularBulking() {
 function calcularMacros() {
     let tdee = parseFloat(localStorage.getItem("tdee"));
     let peso = parseFloat(localStorage.getItem("peso"));
-
     if (!tdee || !peso) {
         document.getElementById("resultado").innerHTML = `
         <div class="alerta">
@@ -208,7 +197,6 @@ function calcularMacros() {
 
     let objetivo = document.getElementById("objetivo").value;
     let intensidade = document.getElementById("intensidade")?.value;
-
     let ajuste = 0;
     if (objetivo === "cutting") {
         if (intensidade === "leve") ajuste = -250;
@@ -223,8 +211,8 @@ function calcularMacros() {
 
     let calorias = tdee + ajuste;
     let proteina = peso * (objetivo === "cutting" ? 2 : 1.8);
-    let gordura = peso * (objetivo === "bulking" ? 1 : 0.8);
-    let carbo = Math.max(0, (calorias - (proteina * 4 + gordura * 9)) / 4);
+    let gordura  = peso * (objetivo === "bulking" ? 1 : 0.8);
+    let carbo    = Math.max(0, (calorias - (proteina * 4 + gordura * 9)) / 4);
 
     let estimativa = ajuste !== 0
         ? (objetivo === "cutting"
@@ -235,7 +223,6 @@ function calcularMacros() {
     document.getElementById("resultado").innerHTML = `
         <strong>${Math.round(calorias)} kcal</strong>
         <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${estimativa}</span>
-
         <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
             <div style="background:#0a0a0a;padding:16px;text-align:center;">
                 <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:#60a5fa;">${Math.round(proteina)}g</div>
@@ -252,14 +239,11 @@ function calcularMacros() {
         </div>
     `;
 
-    // Gráfico
     const canvas = document.getElementById("graficoMacros");
     if (!canvas) return;
     if (window.grafico) window.grafico.destroy();
-
     const totalMacros = proteina + carbo + gordura;
     const ctx = canvas.getContext("2d");
-
     window.grafico = new Chart(ctx, {
         type: "doughnut",
         data: {
@@ -295,17 +279,13 @@ function calcularMacros() {
     });
 }
 
-
-// ============================================================
-// SUBSTITUA a função mostrarBotaoDownload no main.js por esta
-// E adicione a função abrirModalCodigo abaixo
-// ============================================================
-
+// ==============================
+// DOWNLOAD PLANILHA + MODAL
+// ==============================
 function mostrarBotaoDownload(dados) {
     const box = document.getElementById('download-planilha-box');
     if (!box) return;
 
-    // Salva dados do usuário para usar depois
     window._dadosPlanilha = dados;
 
     box.innerHTML = `
@@ -322,33 +302,22 @@ function mostrarBotaoDownload(dados) {
                 Já comprou? Clique acima e insira seu código de acesso.
             </p>
         </div>
-
-        <!-- Modal de código -->
         <div id="modal-codigo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
             <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:32px;width:100%;max-width:400px;margin:24px;">
                 <h3 style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;">Inserir Código de Acesso</h3>
                 <p style="font-size:0.85rem;margin-bottom:20px;">Após a compra você recebe o código por email. <a href="https://go.hotmart.com/Y106058569L" target="_blank" style="color:var(--accent);">Ainda não comprou?</a></p>
-
                 <div style="display:flex;gap:8px;margin-bottom:12px;">
                     <input type="text" id="input-codigo"
                         placeholder="Ex: SC-A3F7K2"
                         style="text-transform:uppercase;letter-spacing:0.1em;font-weight:700;flex:1;"
                         maxlength="9"
                         onkeydown="if(event.key==='Enter')validarCodigo()">
-                    <button onclick="validarCodigo()" class="btn-primary" style="flex-shrink:0;cursor:pointer;">
-                        Validar
-                    </button>
+                    <button onclick="validarCodigo()" class="btn-primary" style="flex-shrink:0;cursor:pointer;">Validar</button>
                 </div>
-
                 <div id="codigo-msg" style="font-size:0.85rem;min-height:20px;margin-bottom:16px;"></div>
-
                 <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;">
-                    <button onclick="fecharModal()" class="btn-secondary" style="cursor:pointer;font-size:0.8rem;">
-                        Cancelar
-                    </button>
-                    <a href="https://go.hotmart.com/Y106058569L" target="_blank" class="btn-primary" style="font-size:0.8rem;text-decoration:none;">
-                        Comprar agora
-                    </a>
+                    <button onclick="fecharModal()" class="btn-secondary" style="cursor:pointer;font-size:0.8rem;">Cancelar</button>
+                    <a href="https://go.hotmart.com/Y106058569L" target="_blank" class="btn-primary" style="font-size:0.8rem;text-decoration:none;">Comprar agora</a>
                 </div>
             </div>
         </div>
@@ -371,7 +340,6 @@ function fecharModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// Fecha modal clicando fora
 document.addEventListener('click', function(e) {
     const modal = document.getElementById('modal-codigo');
     if (modal && e.target === modal) fecharModal();
@@ -379,11 +347,11 @@ document.addEventListener('click', function(e) {
 
 async function validarCodigo() {
     const input = document.getElementById('input-codigo');
-    const msg = document.getElementById('codigo-msg');
+    const msg   = document.getElementById('codigo-msg');
     const codigo = input?.value?.trim().toUpperCase();
 
     if (!codigo || codigo.length < 8) {
-        msg.innerHTML = '<span style="color:var(--red,#ff6b6b);">Digite um código válido (ex: SC-A3F7K2)</span>';
+        msg.innerHTML = '<span style="color:#ff6b6b;">Digite um código válido (ex: SC-A3F7K2)</span>';
         return;
     }
 
@@ -420,17 +388,16 @@ async function validarCodigo() {
                 fecharModal();
             }, 800);
         } else {
-            msg.innerHTML = `<span style="color:var(--red,#ff6b6b);">✗ ${data.error || 'Código inválido'}</span>`;
+            msg.innerHTML = `<span style="color:#ff6b6b;">✗ ${data.error || 'Código inválido'}</span>`;
         }
     } catch(e) {
-        msg.innerHTML = '<span style="color:var(--red,#ff6b6b);">Erro de conexão. Tente novamente.</span>';
+        msg.innerHTML = '<span style="color:#ff6b6b;">Erro de conexão. Tente novamente.</span>';
     }
 }
 
-
-}
-
-// Alias so onchange="toggleIntensidade()" in HTML still works
+// ==============================
+// ALIAS
+// ==============================
 function toggleIntensidade() { atualizarIntensidade(); }
 
 // ==============================
