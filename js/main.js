@@ -296,28 +296,138 @@ function calcularMacros() {
 }
 
 
-// ==============================
-// DOWNLOAD PLANILHA PERSONALIZADA
-// ==============================
+// ============================================================
+// SUBSTITUA a função mostrarBotaoDownload no main.js por esta
+// E adicione a função abrirModalCodigo abaixo
+// ============================================================
+
 function mostrarBotaoDownload(dados) {
-    const baseUrl = 'https://shapecalc-admin.onrender.com/download/planilha';
-    const params = new URLSearchParams({
-        peso:      dados.peso      || '',
-        altura:    dados.altura    || '',
-        idade:     dados.idade     || '',
-        sexo:      dados.sexo      || 'M',
-        bf:        dados.bf        || '',
-        atividade: dados.atividade || 2,
-        objetivo:  dados.objetivo  || 2,
-        refeicoes: 4
-    });
-    const link = document.getElementById('btn-download-planilha');
-    const box  = document.getElementById('download-planilha-box');
-    if (link && box) {
-        link.href = baseUrl + '?' + params.toString();
-        box.style.display = 'block';
-        setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    const box = document.getElementById('download-planilha-box');
+    if (!box) return;
+
+    // Salva dados do usuário para usar depois
+    window._dadosPlanilha = dados;
+
+    box.innerHTML = `
+        <div style="background:rgba(200,255,0,0.05);border:1px solid rgba(200,255,0,0.2);border-radius:8px;padding:20px;">
+            <h4 style="margin-bottom:8px;color:var(--accent);">Seu plano está pronto</h4>
+            <p style="margin-bottom:16px;font-size:0.9rem;">
+                Baixe sua planilha personalizada com TDEE, macros, plano alimentar
+                e tracking de 16 semanas — preenchida com os seus dados.
+            </p>
+            <button onclick="abrirModalCodigo()" class="btn-primary" style="cursor:pointer;">
+                ⬇ Baixar Planilha — R$ 10,00
+            </button>
+            <p style="font-size:0.72rem;color:var(--text-muted);margin-top:10px;">
+                Já comprou? Clique acima e insira seu código de acesso.
+            </p>
+        </div>
+
+        <!-- Modal de código -->
+        <div id="modal-codigo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:32px;width:100%;max-width:400px;margin:24px;">
+                <h3 style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;">Inserir Código de Acesso</h3>
+                <p style="font-size:0.85rem;margin-bottom:20px;">Após a compra você recebe o código por email. <a href="https://go.hotmart.com/Y106058569L" target="_blank" style="color:var(--accent);">Ainda não comprou?</a></p>
+
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <input type="text" id="input-codigo"
+                        placeholder="Ex: SC-A3F7K2"
+                        style="text-transform:uppercase;letter-spacing:0.1em;font-weight:700;flex:1;"
+                        maxlength="9"
+                        onkeydown="if(event.key==='Enter')validarCodigo()">
+                    <button onclick="validarCodigo()" class="btn-primary" style="flex-shrink:0;cursor:pointer;">
+                        Validar
+                    </button>
+                </div>
+
+                <div id="codigo-msg" style="font-size:0.85rem;min-height:20px;margin-bottom:16px;"></div>
+
+                <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;">
+                    <button onclick="fecharModal()" class="btn-secondary" style="cursor:pointer;font-size:0.8rem;">
+                        Cancelar
+                    </button>
+                    <a href="https://go.hotmart.com/Y106058569L" target="_blank" class="btn-primary" style="font-size:0.8rem;text-decoration:none;">
+                        Comprar agora
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+
+    box.style.display = 'block';
+    setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function abrirModalCodigo() {
+    const modal = document.getElementById('modal-codigo');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => document.getElementById('input-codigo')?.focus(), 100);
     }
+}
+
+function fecharModal() {
+    const modal = document.getElementById('modal-codigo');
+    if (modal) modal.style.display = 'none';
+}
+
+// Fecha modal clicando fora
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('modal-codigo');
+    if (modal && e.target === modal) fecharModal();
+});
+
+async function validarCodigo() {
+    const input = document.getElementById('input-codigo');
+    const msg = document.getElementById('codigo-msg');
+    const codigo = input?.value?.trim().toUpperCase();
+
+    if (!codigo || codigo.length < 8) {
+        msg.innerHTML = '<span style="color:var(--red,#ff6b6b);">Digite um código válido (ex: SC-A3F7K2)</span>';
+        return;
+    }
+
+    msg.innerHTML = '<span style="color:var(--text-muted);">Validando...</span>';
+
+    const dados = window._dadosPlanilha || {};
+
+    try {
+        const res = await fetch('https://shapecalc-admin.onrender.com/api/liberar-download', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                codigo,
+                peso:      dados.peso      || '',
+                altura:    dados.altura    || '',
+                idade:     dados.idade     || '',
+                sexo:      dados.sexo      || 'M',
+                bf:        dados.bf        || '',
+                atividade: dados.atividade || 2,
+                objetivo:  dados.objetivo  || 2,
+                refeicoes: dados.refeicoes || 4
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.valid && data.token) {
+            msg.innerHTML = '<span style="color:#34D399;">✓ Código válido! Baixando sua planilha...</span>';
+            setTimeout(() => {
+                window.open(
+                    `https://shapecalc-admin.onrender.com/download/planilha?token=${data.token}`,
+                    '_blank'
+                );
+                fecharModal();
+            }, 800);
+        } else {
+            msg.innerHTML = `<span style="color:var(--red,#ff6b6b);">✗ ${data.error || 'Código inválido'}</span>`;
+        }
+    } catch(e) {
+        msg.innerHTML = '<span style="color:var(--red,#ff6b6b);">Erro de conexão. Tente novamente.</span>';
+    }
+}
+
+
 }
 
 // Alias so onchange="toggleIntensidade()" in HTML still works

@@ -1,0 +1,70 @@
+
+============================================================
+INSTRUÇÕES PARA ATUALIZAR O server.js
+============================================================
+
+1. Abra o arquivo server.js na pasta shapecalc-admin
+2. No TOPO do arquivo, após os outros requires, adicione:
+
+   const crypto = require('crypto');
+
+3. Nas variáveis de ambiente (.env e Render), adicione:
+
+   HOTMART_TOKEN=9PKtKHGVRPtbe8ntZNBRkbp0RB83rT89780090
+
+4. Substitua a linha:
+
+   app.get('/download/planilha', gerarPlanilha);
+
+   Pelo conteúdo completo do arquivo webhook-routes.js
+   (incluído no zip como shapecalc-admin-updates/webhook-routes.js)
+
+5. Faça push e aguarde o Render reiniciar.
+
+============================================================
+COMO TESTAR
+============================================================
+
+Após o deploy, acesse:
+https://shapecalc-admin.onrender.com/admin/codigos
+
+(precisa estar logado no painel admin)
+
+Para gerar um código de teste manualmente, via terminal:
+curl -X POST https://shapecalc-admin.onrender.com/admin/gerar-codigo \
+  -H "Cookie: SEU_COOKIE_DE_SESSAO" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"teste@email.com"}'
+
+============================================================
+FLUXO COMPLETO
+============================================================
+
+1. Cliente compra em https://go.hotmart.com/Y106058569L
+2. Hotmart envia POST para /webhook/hotmart
+3. Servidor gera código único (ex: SC-A3F7K2)
+4. IMPORTANTE: Configure o email de entrega no Hotmart com o código
+   (veja instruções abaixo)
+5. Cliente recebe email com o código
+6. Cliente vai ao shapecalc.com.br, calcula TDEE
+7. Aparece botão "Baixar Planilha — R$ 10,00"
+8. Modal pede o código
+9. Código validado → token temporário gerado
+10. Planilha baixa automaticamente com dados do usuário
+11. Código é marcado como usado — não funciona mais
+
+============================================================
+CONFIGURAR EMAIL DE ENTREGA NO HOTMART
+============================================================
+
+No painel do produto → Conteúdo → Área de membros
+Adicione uma página com o texto:
+
+"Seu código de acesso ShapeCalc: {{purchase_code}}"
+
+OU configure o email automático pós-compra com o código.
+O código chegará via webhook e ficará disponível em
+/admin/codigos no painel admin para você enviar manualmente
+enquanto configura o automático.
+
+============================================================
