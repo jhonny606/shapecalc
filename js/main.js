@@ -303,21 +303,21 @@ function mostrarBotaoDownload(dados) {
             </p>
         </div>
         <div id="modal-codigo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:32px;width:100%;max-width:400px;margin:24px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:24px 20px;width:calc(100% - 32px);max-width:400px;margin:16px auto;box-sizing:border-box;">
                 <h3 style="margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;">Inserir Código de Acesso</h3>
                 <p style="font-size:0.85rem;margin-bottom:20px;">Após a compra você recebe o código por email. <a href="https://go.hotmart.com/Y106058569L" target="_blank" style="color:var(--accent);">Ainda não comprou?</a></p>
-                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
                     <input type="text" id="input-codigo"
                         placeholder="Ex: SC-A3F7K2"
-                        style="text-transform:uppercase;letter-spacing:0.1em;font-weight:700;flex:1;"
+                        style="text-transform:uppercase;letter-spacing:0.1em;font-weight:700;width:100%;font-size:1rem;"
                         maxlength="9"
                         onkeydown="if(event.key==='Enter')validarCodigo()">
-                    <button onclick="validarCodigo()" class="btn-primary" style="flex-shrink:0;cursor:pointer;">Validar</button>
+                    <button onclick="validarCodigo()" class="btn-primary" style="width:100%;cursor:pointer;justify-content:center;">Validar</button>
                 </div>
                 <div id="codigo-msg" style="font-size:0.85rem;min-height:20px;margin-bottom:16px;"></div>
-                <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;">
-                    <button onclick="fecharModal()" class="btn-secondary" style="cursor:pointer;font-size:0.8rem;">Cancelar</button>
-                    <a href="https://go.hotmart.com/Y106058569L" target="_blank" class="btn-primary" style="font-size:0.8rem;text-decoration:none;">Comprar agora</a>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="https://go.hotmart.com/Y106058569L" target="_blank" class="btn-primary" style="text-decoration:none;justify-content:center;text-align:center;">Comprar agora — R$ 10,00</a>
+                    <button onclick="fecharModal()" class="btn-secondary" style="cursor:pointer;width:100%;justify-content:center;">Cancelar</button>
                 </div>
             </div>
         </div>
