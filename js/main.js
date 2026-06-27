@@ -112,7 +112,7 @@ function calcularTDEE() {
         <strong>${Math.round(tdee)} kcal</strong>
         <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${classificacao}</span>
 
-        <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
+        <div class="resultado-grid" style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
             <div style="background:#0a0a0a;padding:16px;text-align:center;">
                 <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:#ff6b6b;">${Math.round(cutting)}</div>
                 <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Cutting <a href="macronutrientes.html" class="usar-link" onclick="setObjetivo('cutting')">usar</a></div>
@@ -223,7 +223,7 @@ function calcularMacros() {
     document.getElementById("resultado").innerHTML = `
         <strong>${Math.round(calorias)} kcal</strong>
         <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;">${estimativa}</span>
-        <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
+        <div class="resultado-grid" style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;border:1px solid var(--border);">
             <div style="background:#0a0a0a;padding:16px;text-align:center;">
                 <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:#60a5fa;">${Math.round(proteina)}g</div>
                 <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;">Proteína</div>
@@ -241,6 +241,8 @@ function calcularMacros() {
 
     const canvas = document.getElementById("graficoMacros");
     if (!canvas) return;
+    const cardGrafico = document.getElementById("card-grafico");
+    if (cardGrafico) cardGrafico.style.display = "block";
     if (window.grafico) window.grafico.destroy();
     const totalMacros = proteina + carbo + gordura;
     const ctx = canvas.getContext("2d");

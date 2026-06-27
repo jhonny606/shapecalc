@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tempo para Atingir seu Objetivo — ShapeCalc</title>
+    <meta name="description" content="Descubra em quantas semanas você atinge seu peso alvo. Veja a projeção completa com gráficos e marcos da sua jornada.">
+    <link rel="canonical" href="https://www.shapecalc.com.br/calculadora-tempo-objetivo.html">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-84XJNCCE9P"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-84XJNCCE9P');</script>
+    <style>
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .kpi {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 18px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .kpi.k-accent::after { background: var(--accent); }
+        .kpi.k-red::after    { background: #ff6b6b; }
+        .kpi.k-blue::after   { background: #60a5fa; }
+        .kpi.k-amber::after  { background: #f59e0b; }
+
+        .kpi-lbl {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            margin-bottom: 6px;
+        }
+
+        .kpi-val {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .kpi-val.k-accent { color: var(--accent); }
+        .kpi-val.k-red    { color: #ff6b6b; }
+        .kpi-val.k-blue   { color: #60a5fa; }
+        .kpi-val.k-amber  { color: #f59e0b; }
+
+        .kpi-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .hero-result {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hero-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .hero-meta {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .hero-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .cenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cenario-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .cenario-card:hover { border-color: var(--border-accent); }
+        .cenario-card.active { border-color: var(--accent); background: rgba(200,255,0,0.04); }
+
+        .cenario-ritmo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .cenario-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+
+        .cenario-semanas {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .cenario-deficit {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .chart-full {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .marcos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .marco-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .marco-icon {
+            font-size: 1.4rem;
+            min-width: 32px;
+        }
+
+        .marco-info { flex: 1; }
+        .marco-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        .marco-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .marco-data { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; color: var(--accent); }
+
+        .tabela-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .tabela-head {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tabela-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .tabela-scroll { overflow-x: auto; max-height: 360px; overflow-y: auto; }
+
+        table.t { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+        table.t th {
+            padding: 9px 14px;
+            text-align: left;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+        }
+        table.t td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+        table.t tr:last-child td { border-bottom: none; }
+        table.t tr:hover td { background: rgba(255,255,255,0.02); }
+        table.t tr.hl td { background: rgba(200,255,0,0.04); }
+        table.t tr.hl td:first-child { color: var(--accent); font-weight: 700; }
+
+        #dashboard-obj { display: none; }
+
+        @media (max-width: 768px) {
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .cenarios-grid { grid-template-columns: 1fr; }
+            .hero-num { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="menu">
+        <a href="index.html">Início</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+        <a href="recomposicao-corporal.html">Recomposição</a>
+        <a href="calculadora-tempo-objetivo.html">Objetivo</a>
+        <a href="blog.html">Blog</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Mudar tema">☀️</button>
+</header>
+
+<main class="container">
+
+    <div class="hero-simple">
+        <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);display:block;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;">Nova ferramenta</span>
+        <h1>Quanto Tempo Para Atingir seu Objetivo?</h1>
+        <p>Informe seu peso atual, peso alvo e ritmo de mudança. Veja a projeção completa com gráfico, marcos e tabela semana a semana.</p>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="card form-card" style="margin-bottom:24px;">
+        <div>
+            <h2 style="margin-bottom:6px;">Seus dados</h2>
+        </div>
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="peso-ini">Peso atual (kg)</label>
+                <input type="number" id="peso-ini" placeholder="85" min="30" max="300">
+            </div>
+            <div class="input-group">
+                <label for="peso-meta">Peso alvo (kg)</label>
+                <input type="number" id="peso-meta" placeholder="75" min="30" max="300">
+            </div>
+            <div class="input-group">
+                <label for="altura-obj">Altura (cm)</label>
+                <input type="number" id="altura-obj" placeholder="178" min="100" max="250">
+            </div>
+            <div class="input-group">
+                <label for="sexo-obj">Sexo</label>
+                <select id="sexo-obj">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="idade-obj">Idade</label>
+                <input type="number" id="idade-obj" placeholder="25" min="15" max="80">
+            </div>
+            <div class="input-group">
+                <label for="ativ-obj">Nível de atividade</label>
+                <select id="ativ-obj">
+                    <option value="1.2">Sedentário</option>
+                    <option value="1.375">Levemente ativo</option>
+                    <option value="1.55" selected>Moderadamente ativo</option>
+                    <option value="1.725">Muito ativo</option>
+                    <option value="1.9">Extremamente ativo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="objetivo-obj">Objetivo</label>
+                <select id="objetivo-obj">
+                    <option value="cutting">Emagrecer (Cutting)</option>
+                    <option value="bulking">Ganhar massa (Bulking)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="ritmo-obj">Ritmo semanal</label>
+                <select id="ritmo-obj">
+                    <option value="0.25">Conservador (0,25 kg/sem)</option>
+                    <option value="0.5" selected>Moderado (0,5 kg/sem)</option>
+                    <option value="0.75">Agressivo (0,75 kg/sem)</option>
+                    <option value="1.0">Muito agressivo (1,0 kg/sem)</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="calcularTempo()">Calcular</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard-obj">
+
+        <!-- Hero result -->
+        <div class="hero-result">
+            <div>
+                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;margin-bottom:4px;">Tempo estimado</div>
+                <div class="hero-num" id="h-semanas">—</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">semanas</div>
+            </div>
+            <div style="width:1px;height:80px;background:var(--border);flex-shrink:0;"></div>
+            <div class="hero-meta">
+                <div class="hero-title" id="h-titulo">—</div>
+                <p style="font-size:0.875rem;color:var(--text-secondary);margin:0;" id="h-desc">—</p>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+                <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;margin-bottom:4px;">Data estimada</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:var(--text);" id="h-data">—</div>
+            </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+            <div class="kpi k-blue">
+                <div class="kpi-lbl">TDEE atual</div>
+                <div class="kpi-val k-blue" id="kpi-tdee">—</div>
+                <div class="kpi-sub">kcal/dia</div>
+            </div>
+            <div class="kpi k-red">
+                <div class="kpi-lbl">Meta calórica</div>
+                <div class="kpi-val k-red" id="kpi-meta">—</div>
+                <div class="kpi-sub" id="kpi-meta-sub">kcal/dia</div>
+            </div>
+            <div class="kpi k-amber">
+                <div class="kpi-lbl">Diferença de peso</div>
+                <div class="kpi-val k-amber" id="kpi-diff">—</div>
+                <div class="kpi-sub">kg a <span id="kpi-diff-dir">perder</span></div>
+            </div>
+            <div class="kpi k-accent">
+                <div class="kpi-lbl">Déficit/Superávit</div>
+                <div class="kpi-val k-accent" id="kpi-deficit">—</div>
+                <div class="kpi-sub">kcal/dia</div>
+            </div>
+        </div>
+
+        <!-- Cenários comparativos -->
+        <div style="margin-bottom:8px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:12px;">Comparativo de ritmos</div>
+            <div class="cenarios-grid" id="cenarios"></div>
+        </div>
+
+        <!-- Gráfico principal -->
+        <div class="chart-full">
+            <div class="chart-header">
+                <div class="chart-title">Evolução do peso semana a semana</div>
+                <div id="chart-legend" style="font-size:0.72rem;color:var(--text-muted);"></div>
+            </div>
+            <canvas id="chart-peso-obj" height="120"></canvas>
+        </div>
+
+        <!-- Marcos -->
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:12px;">Marcos da jornada</div>
+        <div class="marcos-grid" id="marcos-obj"></div>
+
+        <!-- Tabela -->
+        <div class="tabela-wrap">
+            <div class="tabela-head">
+                <span class="tabela-title">Projeção semana a semana</span>
+                <span id="tabela-info" style="font-size:0.72rem;color:var(--text-muted);"></span>
+            </div>
+            <div class="tabela-scroll">
+                <table class="t">
+                    <thead>
+                        <tr>
+                            <th>Semana</th>
+                            <th>Peso (kg)</th>
+                            <th>Variação</th>
+                            <th>TDEE estimado</th>
+                            <th>Meta calórica</th>
+                            <th>% do objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="article-links">
+            <a href="recomposicao-corporal.html" class="link-card">Calculadora de Recomposição Corporal</a>
+            <a href="tdee-calculadora.html" class="link-card">Calcular TDEE completo</a>
+            <a href="macronutrientes.html" class="link-card">Calcular Macronutrientes</a>
+        </div>
+
+    </div><!-- /dashboard -->
+
+    <div class="ad"></div>
+
+    <div class="card" style="margin-top:24px;">
+        <h2 style="margin-bottom:16px;">Como interpretar a projeção</h2>
+        <p>A calculadora usa seu TDEE (gasto calórico diário total) como base e projeta semana a semana como o peso vai evoluir considerando o ritmo escolhido. O TDEE é recalculado a cada semana conforme o peso muda — afinal, um corpo mais leve gasta menos energia.</p>
+        <p>Os números são estimativas baseadas em médias populacionais. Na prática, há semanas de platô, variações de retenção de água e diferenças individuais de metabolismo. Use a projeção como guia, não como verdade absoluta.</p>
+        <h3>Por que o ritmo moderado costuma ser o melhor?</h3>
+        <p>Ritmos muito agressivos (acima de 0,75 kg/semana) aumentam o risco de perda muscular durante o cutting e acúmulo excessivo de gordura durante o bulking. O ritmo moderado de 0,5 kg/semana oferece o melhor equilíbrio entre velocidade de resultado e preservação da composição corporal.</p>
+    </div>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+let _tdeeBase = 0;
+let _pesoIni  = 0;
+let _pesoMeta = 0;
+let _objetivo = 'cutting';
+
+function calcularTempo() {
+    const pesoIni  = parseFloat(document.getElementById('peso-ini').value);
+    const pesoMeta = parseFloat(document.getElementById('peso-meta').value);
+    const altura   = parseFloat(document.getElementById('altura-obj').value);
+    const sexo     = document.getElementById('sexo-obj').value;
+    const idade    = parseFloat(document.getElementById('idade-obj').value);
+    const ativ     = parseFloat(document.getElementById('ativ-obj').value);
+    const objetivo = document.getElementById('objetivo-obj').value;
+    const ritmo    = parseFloat(document.getElementById('ritmo-obj').value);
+
+    if (!pesoIni || !pesoMeta || !altura || !idade) {
+        alert('Preencha todos os campos.');
+        return;
+    }
+
+    const isCutting = objetivo === 'cutting';
+    if (isCutting && pesoMeta >= pesoIni) { alert('No cutting, o peso alvo deve ser menor que o atual.'); return; }
+    if (!isCutting && pesoMeta <= pesoIni) { alert('No bulking, o peso alvo deve ser maior que o atual.'); return; }
+
+    _pesoIni  = pesoIni;
+    _pesoMeta = pesoMeta;
+    _objetivo = objetivo;
+
+    const diffPeso = Math.abs(pesoMeta - pesoIni);
+    const semanas  = Math.ceil(diffPeso / ritmo);
+
+    // TDEE base
+    const tmb = sexo === 'M'
+        ? (10 * pesoIni) + (6.25 * altura) - (5 * idade) + 5
+        : (10 * pesoIni) + (6.25 * altura) - (5 * idade) - 161;
+    const tdee = Math.round(tmb * ativ);
+    _tdeeBase = tdee;
+
+    const deficitDia  = Math.round(ritmo * 7700 / 7);
+    const metaCalorica = isCutting ? tdee - deficitDia : tdee + deficitDia;
+
+    // Data estimada
+    const dataAlvo = new Date();
+    dataAlvo.setDate(dataAlvo.getDate() + semanas * 7);
+    const dataStr = dataAlvo.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+
+    // Hero
+    document.getElementById('h-semanas').textContent = semanas;
+    document.getElementById('h-titulo').textContent  = isCutting
+        ? `Cutting de ${diffPeso.toFixed(1)} kg`
+        : `Bulking de ${diffPeso.toFixed(1)} kg`;
+    document.getElementById('h-desc').textContent    =
+        `Saindo de ${pesoIni} kg → ${pesoMeta} kg em ${semanas} semanas (${(semanas/4.33).toFixed(1)} meses) com ritmo de ${ritmo} kg/semana.`;
+    document.getElementById('h-data').textContent    = dataStr;
+
+    // KPIs
+    document.getElementById('kpi-tdee').textContent     = tdee;
+    document.getElementById('kpi-meta').textContent     = metaCalorica;
+    document.getElementById('kpi-meta-sub').textContent = isCutting ? 'kcal/dia (déficit)' : 'kcal/dia (superávit)';
+    document.getElementById('kpi-diff').textContent     = diffPeso.toFixed(1) + ' kg';
+    document.getElementById('kpi-diff-dir').textContent = isCutting ? 'perder' : 'ganhar';
+    document.getElementById('kpi-deficit').textContent  = (isCutting ? '−' : '+') + deficitDia;
+
+    // Cenários
+    const ritmos = [
+        { val: 0.25, label: 'Conservador', cor: '#34d399' },
+        { val: 0.5,  label: 'Moderado',    cor: 'var(--accent)' },
+        { val: 0.75, label: 'Agressivo',   cor: '#f59e0b' },
+    ];
+
+    const cEl = document.getElementById('cenarios');
+    cEl.innerHTML = '';
+    ritmos.forEach(r => {
+        const s    = Math.ceil(diffPeso / r.val);
+        const def  = Math.round(r.val * 7700 / 7);
+        const cal  = isCutting ? tdee - def : tdee + def;
+        const isActive = r.val === ritmo;
+        const div = document.createElement('div');
+        div.className = 'cenario-card' + (isActive ? ' active' : '');
+        div.innerHTML = `
+            <div class="cenario-ritmo" style="color:${r.cor};">${r.val} kg<span style="font-size:1rem;">/sem</span></div>
+            <div class="cenario-label">${r.label}</div>
+            <div class="cenario-semanas">${s} semanas <span style="color:var(--text-muted);">(${(s/4.33).toFixed(1)} m)</span></div>
+            <div class="cenario-deficit">${isCutting ? '−' : '+'}${def} kcal/dia · meta: ${cal} kcal</div>
+        `;
+        cEl.appendChild(div);
+    });
+
+    // Projeção semanal
+    const labels  = [];
+    const pesosArr = [];
+    const tbody   = document.getElementById('tabela-body');
+    tbody.innerHTML = '';
+
+    let pesoAtual = pesoIni;
+    const dir = isCutting ? -1 : 1;
+
+    // Marcos de % do objetivo
+    const marcosPorc = [25, 50, 75, 100];
+    const marcosDetect = {};
+
+    for (let s = 0; s <= semanas; s++) {
+        const porc = Math.min(100, Math.abs(pesoAtual - pesoIni) / diffPeso * 100);
+        marcosPorc.forEach(m => {
+            if (!marcosDetect[m] && porc >= m) marcosDetect[m] = { semana: s, peso: pesoAtual };
+        });
+
+        const tmbAt = sexo === 'M'
+            ? (10 * pesoAtual) + (6.25 * altura) - (5 * idade) + 5
+            : (10 * pesoAtual) + (6.25 * altura) - (5 * idade) - 161;
+        const tdeeAt = Math.round(tmbAt * ativ);
+        const metaAt = isCutting ? tdeeAt - deficitDia : tdeeAt + deficitDia;
+
+        labels.push(s === 0 ? 'Início' : `S${s}`);
+        pesosArr.push(+pesoAtual.toFixed(2));
+
+        const isMarco = Object.values(marcosDetect).some(d => d.semana === s);
+        const tr = document.createElement('tr');
+        if (isMarco) tr.className = 'hl';
+        tr.innerHTML = `
+            <td>${s === 0 ? 'Início' : `Semana ${s}`}</td>
+            <td>${pesoAtual.toFixed(1)}</td>
+            <td>${s === 0 ? '—' : (dir > 0 ? '+' : '−') + ritmo + ' kg'}</td>
+            <td>${tdeeAt} kcal</td>
+            <td>${metaAt} kcal</td>
+            <td>${porc.toFixed(0)}%</td>
+        `;
+        tbody.appendChild(tr);
+
+        pesoAtual = +(pesoAtual + dir * ritmo).toFixed(2);
+        if (isCutting && pesoAtual < pesoMeta) pesoAtual = pesoMeta;
+        if (!isCutting && pesoAtual > pesoMeta) pesoAtual = pesoMeta;
+    }
+
+    document.getElementById('tabela-info').textContent = `${semanas} semanas · ${diffPeso.toFixed(1)} kg`;
+
+    // Marcos visuais
+    const marcosEl = document.getElementById('marcos-obj');
+    marcosEl.innerHTML = '';
+    const icones = { 25:'🏁', 50:'⚡', 75:'🔥', 100:'🏆' };
+    Object.entries(marcosDetect).forEach(([porc, data]) => {
+        const div = document.createElement('div');
+        div.className = 'marco-item';
+        div.innerHTML = `
+            <div class="marco-icon">${icones[porc]}</div>
+            <div class="marco-info">
+                <div class="marco-title">${porc}% do objetivo</div>
+                <div class="marco-sub">${data.peso.toFixed(1)} kg</div>
+            </div>
+            <div class="marco-data">Sem. ${data.semana}</div>
+        `;
+        marcosEl.appendChild(div);
+    });
+
+    // Gráfico
+    document.getElementById('chart-legend').textContent =
+        `${pesoIni} kg → ${pesoMeta} kg`;
+
+    if (window._chartObj) window._chartObj.destroy();
+    window._chartObj = new Chart(document.getElementById('chart-peso-obj'), {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                data: pesosArr,
+                borderColor: isCutting ? '#ff6b6b' : '#60a5fa',
+                backgroundColor: isCutting ? 'rgba(255,107,107,0.06)' : 'rgba(96,165,250,0.06)',
+                borderWidth: 2.5,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                fill: true,
+                tension: 0.3
+            }, {
+                data: Array(pesosArr.length).fill(pesoMeta),
+                borderColor: 'rgba(200,255,0,0.4)',
+                borderWidth: 1,
+                borderDash: [6, 4],
+                pointRadius: 0,
+                fill: false,
+                tension: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1a1a1a',
+                    borderColor: '#2a2a2a',
+                    borderWidth: 1,
+                    titleColor: '#f0f0f0',
+                    bodyColor: '#999',
+                    callbacks: {
+                        label: ctx => `${ctx.raw} kg`
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#444', maxTicksLimit: 10, font: { size: 10 } },
+                    grid: { color: '#181818' }
+                },
+                y: {
+                    ticks: { color: '#444', font: { size: 10 } },
+                    grid: { color: '#181818' }
+                }
+            }
+        }
+    });
+
+    document.getElementById('dashboard-obj').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('dashboard-obj').scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 100);
+}
+</script>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand"><h2>Shape<span style="color:var(--accent)">Calc</span></h2><p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p></div>
+        <div class="footer-links"><h3>Ferramentas</h3><a href="tdee-calculadora.html">TDEE</a><a href="macronutrientes.html">Macronutrientes</a><a href="calorias-cutting.html">Cutting</a><a href="calorias-bulking.html">Bulking</a></div>
+        <div class="footer-links"><h3>Conteúdo</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre</a></div>
+        <div class="footer-links"><h3>Legal</h3><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="contato.html">Contato</a></div>
+    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>

@@ -12,5 +12,8 @@
   <url><loc>https://www.shapecalc.com.br/blog/guia-cutting.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.shapecalc.com.br/blog/guia-bulking.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.shapecalc.com.br/blog/quantas-calorias-por-dia.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.shapecalc.com.br/blog/o-que-sao-macronutrientes.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<!-- BUILD:BLOG_START -->
+  <url><loc>https://www.shapecalc.com.br/blog/creatina-para-iniciantes.html</loc><lastmod>2026-06-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.shapecalc.com.br/blog/como-calcular-tdee.html</loc><lastmod>2026-01-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<!-- BUILD:BLOG_END -->
 </urlset>

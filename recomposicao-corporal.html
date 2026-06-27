@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Recomposição Corporal — ShapeCalc</title>
+    <meta name="description" content="Calcule quanto tempo leva para atingir seu físico ideal. Veja a progressão semana a semana de peso, gordura e massa muscular com dashboard completo.">
+    <link rel="canonical" href="https://www.shapecalc.com.br/recomposicao-corporal.html">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1987632761556042" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-84XJNCCE9P"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-84XJNCCE9P');</script>
+    <style>
+        /* Dashboard específico */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .stat-card.accent::before  { background: var(--accent); }
+        .stat-card.red::before     { background: #ff6b6b; }
+        .stat-card.blue::before    { background: #60a5fa; }
+        .stat-card.amber::before   { background: #f59e0b; }
+        .stat-card.green::before   { background: #34d399; }
+
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .stat-value.accent { color: var(--accent); }
+        .stat-value.red    { color: #ff6b6b; }
+        .stat-value.blue   { color: #60a5fa; }
+        .stat-value.amber  { color: #f59e0b; }
+        .stat-value.green  { color: #34d399; }
+
+        .stat-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .chart-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .timeline-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timeline-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .timeline-table th {
+            padding: 10px 16px;
+            text-align: left;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .timeline-table tr:last-child td { border-bottom: none; }
+        .timeline-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .milestone-row td { background: rgba(200,255,0,0.04) !important; }
+        .milestone-row td:first-child { color: var(--accent); font-weight: 700; }
+
+        .progress-bar-wrap {
+            background: var(--border);
+            border-radius: 2px;
+            height: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: var(--accent);
+            transition: width 0.6s ease;
+        }
+
+        .body-visual {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+        }
+
+        .body-bars {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .body-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .body-bar-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            width: 80px;
+            font-family: 'Barlow Condensed', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .body-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .body-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .body-bar-val {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            width: 56px;
+            text-align: right;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 3px 8px;
+            border-radius: 2px;
+            margin-left: 8px;
+        }
+
+        .phase-cutting { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+        .phase-bulking { background: rgba(96,165,250,0.15); color: #60a5fa; }
+        .phase-manut   { background: rgba(200,255,0,0.12); color: var(--accent); }
+
+        #dashboard { display: none; }
+
+        .result-highlight {
+            background: rgba(200,255,0,0.06);
+            border: 1px solid rgba(200,255,0,0.2);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .result-highlight .big {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .result-highlight .label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+
+        .result-highlight .desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+            .chart-grid { grid-template-columns: 1fr; }
+            .body-visual { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="logo">Shape<span style="color:var(--accent)">Calc</span></h1>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="menu">
+        <a href="index.html">Início</a>
+        <a href="tdee-calculadora.html">TDEE</a>
+        <a href="macronutrientes.html">Macronutrientes</a>
+        <a href="calorias-cutting.html">Cutting</a>
+        <a href="calorias-bulking.html">Bulking</a>
+        <a href="recomposicao-corporal.html">Recomposição</a>
+        <a href="calculadora-tempo-objetivo.html">Objetivo</a>
+        <a href="blog.html">Blog</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Mudar tema">☀️</button>
+</header>
+
+<main class="container">
+
+    <div class="hero-simple">
+        <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);display:block;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;">Nova ferramenta</span>
+        <h1>Recomposição Corporal</h1>
+        <p>Descubra semana a semana como seu corpo vai mudar. Veja projeções de peso, gordura e massa magra com base nos seus dados reais.</p>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="card form-card" style="margin-bottom:24px;">
+        <div>
+            <h2 style="margin-bottom:6px;">Seus dados</h2>
+            <p style="font-size:0.85rem;">Preencha com precisão — quanto mais exato, mais realista a projeção.</p>
+        </div>
+
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="peso-atual">Peso atual (kg)</label>
+                <input type="number" id="peso-atual" placeholder="80" min="30" max="300">
+            </div>
+            <div class="input-group">
+                <label for="altura-rc">Altura (cm)</label>
+                <input type="number" id="altura-rc" placeholder="178" min="100" max="250">
+            </div>
+            <div class="input-group">
+                <label for="bf-atual">% Gordura atual</label>
+                <input type="number" id="bf-atual" placeholder="25" min="3" max="60">
+            </div>
+            <div class="input-group">
+                <label for="bf-alvo">% Gordura alvo</label>
+                <input type="number" id="bf-alvo" placeholder="15" min="3" max="60">
+            </div>
+            <div class="input-group">
+                <label for="sexo-rc">Sexo</label>
+                <select id="sexo-rc">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="idade-rc">Idade</label>
+                <input type="number" id="idade-rc" placeholder="25" min="15" max="80">
+            </div>
+            <div class="input-group">
+                <label for="atividade-rc">Nível de atividade</label>
+                <select id="atividade-rc">
+                    <option value="1.2">Sedentário</option>
+                    <option value="1.375">Levemente ativo</option>
+                    <option value="1.55" selected>Moderadamente ativo</option>
+                    <option value="1.725">Muito ativo</option>
+                    <option value="1.9">Extremamente ativo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="ritmo">Ritmo de perda</label>
+                <select id="ritmo">
+                    <option value="0.25">Conservador (−0,25 kg/sem)</option>
+                    <option value="0.5" selected>Moderado (−0,5 kg/sem)</option>
+                    <option value="0.75">Agressivo (−0,75 kg/sem)</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="calcularRecomp()">Calcular projeção</button>
+    </div>
+
+    <!-- DASHBOARD (aparece após cálculo) -->
+    <div id="dashboard">
+
+        <!-- Destaque principal -->
+        <div class="result-highlight">
+            <div>
+                <div class="label">Tempo estimado</div>
+                <div class="big" id="res-semanas">—</div>
+                <div class="label">semanas</div>
+            </div>
+            <div style="width:1px;height:60px;background:var(--border);"></div>
+            <div>
+                <div class="label">Equivale a</div>
+                <div class="big" id="res-meses" style="font-size:2rem;">—</div>
+                <div class="label">meses</div>
+            </div>
+            <div style="width:1px;height:60px;background:var(--border);"></div>
+            <p class="desc" id="res-desc">—</p>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="dashboard-grid">
+            <div class="stat-card red">
+                <div class="stat-label">Gordura a perder</div>
+                <div class="stat-value red" id="stat-gordura">—</div>
+                <div class="stat-sub" id="stat-gordura-sub">—</div>
+            </div>
+            <div class="stat-card accent">
+                <div class="stat-label">Massa magra atual</div>
+                <div class="stat-value accent" id="stat-magra">—</div>
+                <div class="stat-sub">preservar ao máximo</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-label">Déficit calórico</div>
+                <div class="stat-value blue" id="stat-deficit">—</div>
+                <div class="stat-sub" id="stat-deficit-sub">—</div>
+            </div>
+            <div class="stat-card green">
+                <div class="stat-label">Peso alvo</div>
+                <div class="stat-value green" id="stat-peso-alvo">—</div>
+                <div class="stat-sub" id="stat-imc">—</div>
+            </div>
+        </div>
+
+        <!-- Barras de composição atual vs alvo -->
+        <div class="body-visual">
+            <div style="min-width:140px;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text);margin-bottom:4px;">Composição</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">Atual → Alvo</div>
+            </div>
+            <div class="body-bars">
+                <div class="body-bar-row">
+                    <div class="body-bar-label">Gordura</div>
+                    <div class="body-bar-track">
+                        <div class="body-bar-fill" id="bar-gordura" style="background:#ff6b6b;width:0%"></div>
+                    </div>
+                    <div class="body-bar-val" style="color:#ff6b6b;" id="bar-gordura-val">—</div>
+                </div>
+                <div class="body-bar-row">
+                    <div class="body-bar-label">Massa Magra</div>
+                    <div class="body-bar-track">
+                        <div class="body-bar-fill" id="bar-magra" style="background:var(--accent);width:0%"></div>
+                    </div>
+                    <div class="body-bar-val" style="color:var(--accent);" id="bar-magra-val">—</div>
+                </div>
+                <div class="body-bar-row">
+                    <div class="body-bar-label">Alvo gordura</div>
+                    <div class="body-bar-track">
+                        <div class="body-bar-fill" id="bar-alvo" style="background:#34d399;width:0%"></div>
+                    </div>
+                    <div class="body-bar-val" style="color:#34d399;" id="bar-alvo-val">—</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="chart-grid">
+            <div class="chart-card">
+                <div class="chart-title">Evolução do peso (kg)</div>
+                <canvas id="chart-peso" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">Composição corporal (%)</div>
+                <canvas id="chart-comp" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Marcos importantes -->
+        <div class="card" style="margin-bottom:24px;">
+            <h3 style="margin-bottom:16px;">Marcos da sua jornada</h3>
+            <div id="marcos-lista" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+
+        <!-- Tabela semanal -->
+        <div class="timeline-card">
+            <div class="timeline-header">
+                <span class="timeline-title">Projeção semana a semana</span>
+                <span id="timeline-total" style="font-size:0.75rem;color:var(--text-muted);"></span>
+            </div>
+            <div style="overflow-x:auto;max-height:400px;overflow-y:auto;">
+                <table class="timeline-table">
+                    <thead>
+                        <tr>
+                            <th>Semana</th>
+                            <th>Peso (kg)</th>
+                            <th>Gordura (%)</th>
+                            <th>Gordura (kg)</th>
+                            <th>Massa Magra (kg)</th>
+                            <th>Déficit/dia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timeline-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="article-links">
+            <a href="tdee-calculadora.html" class="link-card">Calcular TDEE completo</a>
+            <a href="macronutrientes.html" class="link-card">Calcular Macronutrientes</a>
+            <a href="calorias-cutting.html" class="link-card">Calculadora de Cutting</a>
+        </div>
+
+    </div><!-- /dashboard -->
+
+    <div class="ad"></div>
+
+    <!-- INFO EDUCATIVA -->
+    <div class="card" style="margin-top:24px;">
+        <h2 style="margin-bottom:16px;">O que é recomposição corporal?</h2>
+        <p>Recomposição corporal é o processo de reduzir o percentual de gordura enquanto se preserva — ou até aumenta — a massa muscular. É diferente de simplesmente "emagrecer": o objetivo não é apenas perder peso na balança, mas mudar a composição do que esse peso representa.</p>
+        <p>O percentual de gordura corporal é a métrica mais relevante para avaliar a composição física. Duas pessoas com o mesmo peso podem ter aparências completamente diferentes dependendo de quanto desse peso é músculo e quanto é gordura.</p>
+        <h3>Como a projeção é calculada</h3>
+        <p>Esta calculadora usa a fórmula Mifflin-St Jeor para estimar o metabolismo basal e aplica o fator de atividade para calcular o TDEE. A partir disso, simula semana a semana o déficit calórico necessário para atingir o percentual de gordura alvo, projetando como o peso e a composição corporal vão evoluir ao longo do tempo.</p>
+        <p>Importantes: as projeções são estimativas. O corpo humano não é linear — há semanas de platô, retenção de água, variações hormonais. Use os números como referência e ajuste conforme os resultados reais a cada 3–4 semanas.</p>
+    </div>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+// ── Cálculo principal ──────────────────────────────────────────────────────────
+function calcularRecomp() {
+    const peso    = parseFloat(document.getElementById('peso-atual').value);
+    const altura  = parseFloat(document.getElementById('altura-rc').value);
+    const bfAtual = parseFloat(document.getElementById('bf-atual').value);
+    const bfAlvo  = parseFloat(document.getElementById('bf-alvo').value);
+    const sexo    = document.getElementById('sexo-rc').value;
+    const idade   = parseFloat(document.getElementById('idade-rc').value);
+    const ativ    = parseFloat(document.getElementById('atividade-rc').value);
+    const ritmo   = parseFloat(document.getElementById('ritmo').value); // kg/semana
+
+    if (!peso || !altura || !bfAtual || !bfAlvo || !idade) {
+        alert('Preencha todos os campos.');
+        return;
+    }
+    if (bfAlvo >= bfAtual) {
+        alert('O percentual de gordura alvo deve ser menor que o atual.');
+        return;
+    }
+
+    // Composição atual
+    const gorduraKgAtual  = peso * (bfAtual / 100);
+    const magraKgAtual    = peso - gorduraKgAtual;
+
+    // Peso alvo (mantendo massa magra, só perdendo gordura)
+    const gorduraKgAlvo   = magraKgAtual * (bfAlvo / (100 - bfAlvo));
+    const pesoAlvo        = magraKgAtual + gorduraKgAlvo;
+    const gorduraPerder   = gorduraKgAtual - gorduraKgAlvo;
+
+    // TDEE atual
+    let tmb = sexo === 'M'
+        ? (10 * peso) + (6.25 * altura) - (5 * idade) + 5
+        : (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+    const tdee = tmb * ativ;
+
+    // Calorias por kg de gordura = 7700 kcal
+    const deficitSemanal  = ritmo * 7700;
+    const deficitDiario   = Math.round(deficitSemanal / 7);
+    const metaCalorica    = Math.round(tdee - deficitDiario);
+    const semanasTotais   = Math.ceil(gorduraPerder / ritmo);
+    const meses           = (semanasTotais / 4.33).toFixed(1);
+
+    // IMC alvo
+    const alturaM = altura / 100;
+    const imcAlvo = (pesoAlvo / (alturaM * alturaM)).toFixed(1);
+
+    // ── Atualizar stat cards ────────────────────────────────────────────────────
+    document.getElementById('stat-gordura').textContent     = gorduraPerder.toFixed(1) + ' kg';
+    document.getElementById('stat-gordura-sub').textContent = `de ${gorduraKgAtual.toFixed(1)}kg → ${gorduraKgAlvo.toFixed(1)}kg`;
+    document.getElementById('stat-magra').textContent       = magraKgAtual.toFixed(1) + ' kg';
+    document.getElementById('stat-deficit').textContent     = deficitDiario + ' kcal';
+    document.getElementById('stat-deficit-sub').textContent = `meta: ${metaCalorica} kcal/dia`;
+    document.getElementById('stat-peso-alvo').textContent   = pesoAlvo.toFixed(1) + ' kg';
+    document.getElementById('stat-imc').textContent         = `IMC alvo: ${imcAlvo}`;
+
+    // ── Highlight principal ─────────────────────────────────────────────────────
+    document.getElementById('res-semanas').textContent = semanasTotais;
+    document.getElementById('res-meses').textContent   = meses + ' m';
+    document.getElementById('res-desc').textContent    =
+        `Perdendo ${gorduraPerder.toFixed(1)}kg de gordura, você sai de ${bfAtual}% para ${bfAlvo}% de gordura corporal, chegando em ${pesoAlvo.toFixed(1)}kg com a mesma massa muscular de hoje.`;
+
+    // ── Barras de composição ───────────────────────────────────────────────────
+    document.getElementById('bar-gordura').style.width    = bfAtual + '%';
+    document.getElementById('bar-gordura-val').textContent = bfAtual + '%';
+    document.getElementById('bar-magra').style.width      = (100 - bfAtual) + '%';
+    document.getElementById('bar-magra-val').textContent  = (100 - bfAtual).toFixed(1) + '%';
+    document.getElementById('bar-alvo').style.width       = bfAlvo + '%';
+    document.getElementById('bar-alvo-val').textContent   = bfAlvo + '%';
+
+    // ── Gerar projeção semanal ─────────────────────────────────────────────────
+    const semanas   = [];
+    const pesos     = [];
+    const bfs       = [];
+    const labels    = [];
+    const tbody     = document.getElementById('timeline-body');
+    tbody.innerHTML = '';
+
+    let pesoAtual = peso;
+    let tdeeAtual = tdee;
+
+    // Marcos a detectar
+    const marcosAlvo = [10, 15, 18, 20, 25].filter(m => m > bfAlvo && m < bfAtual);
+    const marcosDetectados = {};
+
+    for (let s = 0; s <= semanasTotais; s++) {
+        const gordAtual = pesoAtual * (bfAtual / 100);
+        const magraAt   = pesoAtual - gordAtual;
+        const bfCurrent = ((pesoAtual - magraKgAtual) / pesoAtual * 100);
+        const bfReal    = Math.max(bfAlvo, bfCurrent);
+        const defDia    = Math.round(tdeeAtual - metaCalorica);
+
+        labels.push(s === 0 ? 'Início' : `Sem ${s}`);
+        pesos.push(+pesoAtual.toFixed(1));
+        bfs.push(+bfReal.toFixed(1));
+
+        // Detectar marcos
+        marcosAlvo.forEach(m => {
+            if (!marcosDetectados[m] && bfReal <= m) {
+                marcosDetectados[m] = s;
+            }
+        });
+
+        // Linha da tabela
+        const isMilestone = Object.values(marcosDetectados).includes(s);
+        const tr = document.createElement('tr');
+        if (isMilestone) tr.className = 'milestone-row';
+        tr.innerHTML = `
+            <td>${s === 0 ? 'Início' : `Semana ${s}`}</td>
+            <td>${pesoAtual.toFixed(1)}</td>
+            <td>${bfReal.toFixed(1)}%</td>
+            <td>${(pesoAtual * bfReal / 100).toFixed(1)}</td>
+            <td>${magraKgAtual.toFixed(1)}</td>
+            <td>−${defDia} kcal</td>
+        `;
+        tbody.appendChild(tr);
+
+        // Próxima semana
+        pesoAtual = Math.max(pesoAlvo, pesoAtual - ritmo);
+        // TDEE cai com o peso
+        const novoTmb = sexo === 'M'
+            ? (10 * pesoAtual) + (6.25 * altura) - (5 * idade) + 5
+            : (10 * pesoAtual) + (6.25 * altura) - (5 * idade) - 161;
+        tdeeAtual = novoTmb * ativ;
+    }
+
+    document.getElementById('timeline-total').textContent = `${semanasTotais} semanas de projeção`;
+
+    // ── Marcos visuais ─────────────────────────────────────────────────────────
+    const marcosEl = document.getElementById('marcos-lista');
+    marcosEl.innerHTML = '';
+
+    const marcosConfig = [
+        { bf: 25, label: '25% gordura', desc: 'Acima da média — boa saúde geral', cor: '#f59e0b' },
+        { bf: 20, label: '20% gordura', desc: 'Média saudável para homens', cor: '#60a5fa' },
+        { bf: 18, label: '18% gordura', desc: 'Definição inicial começa a aparecer', cor: '#34d399' },
+        { bf: 15, label: '15% gordura', desc: 'Definição visível, músculos aparentes', cor: 'var(--accent)' },
+        { bf: 12, label: '12% gordura', desc: 'Físico atlético, vascularização', cor: '#ff6b6b' },
+        { bf: 10, label: '10% gordura', desc: 'Abdômen definido, físico competitivo', cor: '#ff6b6b' },
+    ].filter(m => m.bf > bfAlvo && m.bf < bfAtual);
+
+    marcosConfig.forEach(m => {
+        const semana = marcosDetectados[m.bf];
+        if (!semana) return;
+        const pesoNoMarco = (magraKgAtual / (1 - m.bf/100)).toFixed(1);
+        const el = document.createElement('div');
+        el.style.cssText = 'display:flex;align-items:center;gap:16px;padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);';
+        el.innerHTML = `
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:${m.cor};min-width:48px;">${m.bf}%</div>
+            <div style="flex:1;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.06em;">${m.label}</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">${m.desc}</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--text);">Semana ${semana}</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">${pesoNoMarco} kg</div>
+            </div>
+        `;
+        marcosEl.appendChild(el);
+    });
+
+    if (marcosConfig.length === 0) {
+        marcosEl.innerHTML = `<p style="color:var(--text-muted);font-size:0.875rem;">Nenhum marco intermediário no intervalo de ${bfAtual}% → ${bfAlvo}%.</p>`;
+    }
+
+    // ── Gráficos ───────────────────────────────────────────────────────────────
+    const chartOpts = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#1a1a1a',
+                borderColor: '#2a2a2a',
+                borderWidth: 1,
+                titleColor: '#f0f0f0',
+                bodyColor: '#999',
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: '#444', maxTicksLimit: 8, font: { size: 10 } },
+                grid: { color: '#1a1a1a' }
+            },
+            y: {
+                ticks: { color: '#444', font: { size: 10 } },
+                grid: { color: '#1a1a1a' }
+            }
+        }
+    };
+
+    // Pesos
+    if (window._chartPeso) window._chartPeso.destroy();
+    window._chartPeso = new Chart(document.getElementById('chart-peso'), {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                data: pesos,
+                borderColor: 'var(--accent)',
+                backgroundColor: 'rgba(200,255,0,0.06)',
+                borderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { ...chartOpts }
+    });
+
+    // Composição
+    if (window._chartComp) window._chartComp.destroy();
+    window._chartComp = new Chart(document.getElementById('chart-comp'), {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: 'Gordura %',
+                    data: bfs,
+                    borderColor: '#ff6b6b',
+                    backgroundColor: 'rgba(255,107,107,0.06)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Massa Magra %',
+                    data: bfs.map(b => +(100 - b).toFixed(1)),
+                    borderColor: 'var(--accent)',
+                    backgroundColor: 'rgba(200,255,0,0.04)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            ...chartOpts,
+            plugins: {
+                ...chartOpts.plugins,
+                legend: {
+                    display: true,
+                    labels: { color: '#666', boxWidth: 12, font: { size: 10 } }
+                }
+            }
+        }
+    });
+
+    // Mostrar dashboard
+    document.getElementById('dashboard').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+}
+</script>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand"><h2>Shape<span style="color:var(--accent)">Calc</span></h2><p>Calculadoras de TDEE, calorias e macronutrientes para otimizar sua dieta.</p></div>
+        <div class="footer-links"><h3>Ferramentas</h3><a href="tdee-calculadora.html">TDEE</a><a href="macronutrientes.html">Macronutrientes</a><a href="calorias-cutting.html">Cutting</a><a href="calorias-bulking.html">Bulking</a></div>
+        <div class="footer-links"><h3>Conteúdo</h3><a href="blog.html">Blog</a><a href="sobre.html">Sobre</a></div>
+        <div class="footer-links"><h3>Legal</h3><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a><a href="contato.html">Contato</a></div>
+    </div>
+    <div class="footer-bottom">© 2026 ShapeCalc. Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>

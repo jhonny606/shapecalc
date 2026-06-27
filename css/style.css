@@ -298,7 +298,7 @@ select option { background: #111; }
   border-left: 3px solid var(--accent);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
-  margin: 4px 0;
+  margin: 20px 0 4px;
   font-size: 0.95rem;
   line-height: 2;
   color: var(--text);
@@ -478,8 +478,11 @@ select option { background: #111; }
    ============================== */
 
 @media (max-width: 768px) {
-  header { padding: 0 20px; }
-  .menu-toggle { display: flex; }
+  header { padding: 0 16px; gap: 8px; }
+  .menu-toggle { display: flex; flex-shrink: 0; }
+
+  /* Garante que o theme-toggle nunca desapareça no mobile */
+  .theme-toggle { flex-shrink: 0; margin-left: auto; }
 
   nav {
     display: none;
@@ -507,6 +510,21 @@ select option { background: #111; }
   .dashboard, .dashboard-bottom { grid-template-columns: 1fr; }
   .footer-container { grid-template-columns: 1fr 1fr; gap: 32px; }
   button, .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+
+  /* Grid de resultado das calculadoras — 3 colunas vira 1 coluna no mobile */
+  .resultado-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .resultado-grid > div {
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .resultado-grid > div:last-child {
+    border-bottom: none;
+  }
 }
 
 @media (max-width: 480px) {
