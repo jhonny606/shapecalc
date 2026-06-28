@@ -63,12 +63,27 @@
     <section class="tools">
         <h1>Artigos</h1>
 
-                        <div class="tools-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+        <!-- BUSCA -->
+        <div style="margin-bottom:24px;position:relative;">
+            <input
+                type="text"
+                id="busca-artigos"
+                placeholder="Buscar artigos..."
+                oninput="filtrarArtigos(this.value)"
+                style="width:100%;padding:12px 16px 12px 44px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'Barlow',sans-serif;font-size:0.95rem;transition:border-color 0.15s;box-sizing:border-box;"
+                onfocus="this.style.borderColor='var(--accent)'"
+                onblur="this.style.borderColor='var(--border)'"
+            >
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;font-size:1rem;">🔍</span>
+        </div>
+        <p id="busca-sem-resultado" style="display:none;color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">Nenhum artigo encontrado para "<span id="busca-termo"></span>".</p>
+
+        <div class="tools-grid" id="grade-artigos" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
 <!-- BUILD:BLOG_START -->
-            <a href="blog/como-calcular-tdee.html" class="tool-card">
+            <a href="blog/guia-proteina.html" class="tool-card">
                 <div class="card">
-                    <h4>Como calcular seu TDEE (Guia Completo 2026)</h4>
-                    <p>O guia definitivo sobre TDEE. Entenda o gasto calórico total, metabolismo basal e como ajustar sua dieta para bulking ou cutting com precisão científica.</p>
+                    <h4>Proteína: Guia Completo sobre Tipos, Absorção, Qualidade e Leucina</h4>
+                    <p>Guia completo sobre proteínas: tipos, digestão, qualidade proteica, leucina e mitos. Saiba quanto consumir por objetivo e como escolher a melhor fonte.</p>
                     <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">28 jun. 2026</p>
                 </div>
             </a>
@@ -76,21 +91,7 @@
                 <div class="card">
                     <h4>Creatina Para Iniciantes — Tudo o que Você Precisa Saber</h4>
                     <p>O que é creatina, como funciona, como tomar, dose ideal, mitos e evidências científicas. Guia completo para quem está começando.</p>
-                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">28 jun. 2026</p>
-                </div>
-            </a>
-            <a href="blog/guia-cutting.html" class="tool-card">
-                <div class="card">
-                    <h4>Guia Completo de Cutting (2026)</h4>
-                    <p>Aprenda como fazer cutting da forma correta: déficit calórico, macros, dieta e erros comuns. Guia completo para perder gordura mantendo massa muscular.</p>
-                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">28 jun. 2026</p>
-                </div>
-            </a>
-            <a href="blog/guia-proteina.html" class="tool-card">
-                <div class="card">
-                    <h4>Proteína: Guia Completo sobre Tipos, Absorção, Qualidade e Leucina</h4>
-                    <p>Guia completo sobre proteínas: tipos, digestão, qualidade proteica, leucina e mitos. Saiba quanto consumir por objetivo e como escolher a melhor fonte.</p>
-                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">28 jun. 2026</p>
+                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">23 jun. 2026</p>
                 </div>
             </a>
             <a href="blog/o-que-sao-macronutrientes.html" class="tool-card">
@@ -114,6 +115,20 @@
                     <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">25 jan. 2026</p>
                 </div>
             </a>
+            <a href="blog/guia-cutting.html" class="tool-card">
+                <div class="card">
+                    <h4>Guia Completo de Cutting (2026)</h4>
+                    <p>Aprenda como fazer cutting da forma correta: déficit calórico, macros, dieta e erros comuns. Guia completo para perder gordura mantendo massa muscular.</p>
+                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">20 jan. 2026</p>
+                </div>
+            </a>
+            <a href="blog/como-calcular-tdee.html" class="tool-card">
+                <div class="card">
+                    <h4>Como calcular seu TDEE (Guia Completo 2026)</h4>
+                    <p>O guia definitivo sobre TDEE. Entenda o gasto calórico total, metabolismo basal e como ajustar sua dieta para bulking ou cutting com precisão científica.</p>
+                    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">15 jan. 2026</p>
+                </div>
+            </a>
 <!-- BUILD:BLOG_END -->
         </div>
     </section>
@@ -124,6 +139,29 @@
 </main>
 
 <script src="js/main.js"></script>
+<script>
+function filtrarArtigos(termo) {
+    const t = termo.trim().toLowerCase();
+    const cards = document.querySelectorAll('#grade-artigos .tool-card');
+    let visiveis = 0;
+
+    cards.forEach(card => {
+        const texto = card.innerText.toLowerCase();
+        const match = !t || texto.includes(t);
+        card.style.display = match ? '' : 'none';
+        if (match) visiveis++;
+    });
+
+    const semResultado = document.getElementById('busca-sem-resultado');
+    const termoSpan = document.getElementById('busca-termo');
+    if (t && visiveis === 0) {
+        termoSpan.textContent = termo;
+        semResultado.style.display = 'block';
+    } else {
+        semResultado.style.display = 'none';
+    }
+}
+</script>
 
 <footer class="footer">
     <div class="footer-container">
